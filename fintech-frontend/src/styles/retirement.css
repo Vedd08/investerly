@@ -1,0 +1,279 @@
+
+/* Scoped Customized Styling for RETIREMENT */
+
+.retirement-calculator .glass-effect {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 12px 36px rgba(46, 63, 86, 0.08);
+  border-radius: 20px;
+}
+
+.retirement-calculator .pulse-animation {
+  animation: pulse-retirement 2.5s infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(47, 179, 74, 0.15);
+  color: #2FB34A;
+}
+
+@keyframes pulse-retirement {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(47, 179, 74, 0.4); }
+  70% { transform: scale(1.05); box-shadow: 0 0 0 12px rgba(47, 179, 74, 0); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(47, 179, 74, 0); }
+}
+
+.retirement-calculator .float-animation {
+  animation: float-retirement 3.5s ease-in-out infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(47, 179, 74, 0.15);
+  color: #2FB34A;
+}
+
+@keyframes float-retirement {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+  100% { transform: translateY(0); }
+}
+
+.retirement-calculator .premium-card {
+  background: linear-gradient(135deg, #2FB34A 0%, #1E8435 100%);
+  position: relative;
+  overflow: hidden;
+  border: none;
+  border-radius: 20px;
+  padding: 2rem;
+  color: white;
+  box-shadow: 0 16px 32px rgba(46, 63, 86, 0.15);
+}
+
+.retirement-calculator .card-glow {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.25), transparent 50%);
+  animation: rotate-glow-retirement 12s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes rotate-glow-retirement {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.retirement-calculator .styled-slider {
+  background: linear-gradient(90deg, #2FB34A 0%, #1E8435 100%) !important;
+  height: 8px !important;
+}
+.retirement-calculator .styled-slider::-webkit-slider-thumb {
+  border-color: #2FB34A !important;
+  transform: scale(1.1);
+}
+
+.retirement-calculator .metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 640px) {
+  .retirement-calculator .metrics-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.retirement-calculator .metric-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  border: 1px solid rgba(46, 63, 86, 0.08);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(46, 63, 86, 0.02);
+}
+
+.retirement-calculator .metric-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(46, 63, 86, 0.08);
+  border-color: rgba(47, 179, 74, 0.3);
+}
+
+.retirement-calculator .action-buttons {
+  display: flex;
+  gap: 1rem;
+  flex-direction: column;
+}
+
+@media (min-width: 640px) {
+  .retirement-calculator .action-buttons {
+    flex-direction: row;
+  }
+}
+
+.retirement-calculator .highlight {
+  background: rgba(47, 179, 74, 0.12);
+  color: #1E8435;
+  padding: 0.3rem 0.75rem;
+  border-radius: 8px;
+  font-weight: 700;
+  display: inline-block;
+}
+
+.retirement-calculator .count-animation {
+  text-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.retirement-calculator .slider-range {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  color: rgba(46, 63, 86, 0.6);
+  font-weight: 500;
+}
+
+/* Investment Card */
+.retirement-calculator .investment-card {
+  background: rgba(47, 179, 74, 0.05);
+  border: 1px solid rgba(47, 179, 74, 0.15);
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.retirement-calculator .investment-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  color: #2E3F56;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.retirement-calculator .investment-amount {
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: #2FB34A;
+  margin-bottom: 1rem;
+}
+
+.retirement-calculator .investment-progress {
+  height: 8px;
+  background: rgba(46, 63, 86, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.retirement-calculator .investment-progress .progress-fill {
+  height: 100%;
+  background: #2FB34A;
+  border-radius: 4px;
+  transition: width 1s ease-out;
+}
+
+/* Wealth Projection Chart Section */
+.retirement-calculator .chart-section {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  border: 1px solid rgba(46, 63, 86, 0.08);
+  box-shadow: 0 8px 24px rgba(46, 63, 86, 0.05);
+}
+
+.retirement-calculator .chart-section h4 {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  color: #2E3F56;
+  font-size: 1.125rem;
+  font-weight: 600;
+  border-bottom: 2px solid rgba(47, 179, 74, 0.2);
+  padding-bottom: 0.5rem;
+  display: inline-block;
+}
+
+.retirement-calculator .chart-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.retirement-calculator .chart-bar-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.retirement-calculator .chart-bar-label {
+  width: 55px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #64748B;
+  text-align: left;
+}
+
+.retirement-calculator .chart-bar-wrapper {
+  flex: 1;
+  height: 14px;
+  background: #E2E8F0;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.06);
+}
+
+.retirement-calculator .chart-bar-fill {
+  height: 100%;
+  border-radius: 8px;
+  transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Accumulation Phase */
+.retirement-calculator .chart-bar-fill.accumulation {
+  background: linear-gradient(90deg, #2FB34A 0%, #1E8435 100%);
+  box-shadow: 0 0 10px rgba(47, 179, 74, 0.4);
+}
+
+/* Withdrawal Phase */
+.retirement-calculator .chart-bar-fill.withdrawal {
+  background: linear-gradient(90deg, #F59E0B 0%, #D97706 100%);
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.4);
+}
+
+.retirement-calculator .chart-bar-value {
+  width: 90px;
+  text-align: right;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #2E3F56;
+}
+
+@media (max-width: 640px) {
+  .retirement-calculator .chart-bar-item {
+    gap: 0.5rem;
+  }
+  .retirement-calculator .chart-bar-label {
+    width: 45px;
+    font-size: 0.75rem;
+  }
+  .retirement-calculator .chart-bar-value {
+    font-size: 0.75rem;
+    width: 75px;
+  }
+}

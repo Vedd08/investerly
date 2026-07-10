@@ -1,0 +1,189 @@
+/* =====================================================
+   LIGHT THEME WELCOME / ONBOARDING PAGE
+   ===================================================== */
+
+   .welcome-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+    color: #0f172a;
+    padding: 120px 2rem 4rem 2rem; /* Buffer for navbar */
+    position: relative;
+    overflow: hidden;
+    font-family: 'Inter', sans-serif;
+  }
+  
+  /* Animated Background Elements */
+  .welcome-bg-elements {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    overflow: hidden;
+    z-index: 0;
+  }
+  
+  .welcome-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.15;
+    animation: welcome-float 20s infinite alternate;
+  }
+  
+  .orb-1 {
+    width: 500px; height: 500px;
+    background: #2FB34A;
+    top: -10%; left: -10%;
+    animation-delay: 0s;
+  }
+  
+  .orb-2 {
+    width: 600px; height: 600px;
+    background: #cbd5e1;
+    bottom: -20%; right: -10%;
+    animation-delay: -5s;
+  }
+  
+  @keyframes welcome-float {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(100px, 50px) scale(1.1); }
+  }
+  
+  /* Content Wrapper */
+  .welcome-content {
+    position: relative;
+    z-index: 1;
+    max-width: 1300px;
+    width: 100%;
+    text-align: center;
+  }
+  
+  .welcome-header {
+    margin-bottom: 4rem;
+  }
+  
+  .welcome-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    color: #0f172a;
+    letter-spacing: -0.5px;
+  }
+  
+  .welcome-subtitle {
+    font-size: 1.25rem;
+    color: #475569;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+  
+  /* Options Grid */
+  .welcome-options {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+  
+  .welcome-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 24px;
+    padding: 3rem 2rem;
+    text-decoration: none;
+    color: #0f172a;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .welcome-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    border-color: #cbd5e1;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+  
+  .welcome-card.primary {
+    border: 2px solid #2FB34A;
+    background: linear-gradient(180deg, #ffffff 0%, #f0fdf4 100%);
+  }
+  
+  .welcome-card.primary:hover {
+    box-shadow: 0 20px 25px -5px rgba(47, 179, 74, 0.15), 0 10px 10px -5px rgba(47, 179, 74, 0.05);
+  }
+  
+  .card-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 20px;
+    background: #f1f5f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    transition: transform 0.3s ease;
+  }
+  
+  .welcome-card:hover .card-icon {
+    transform: scale(1.1) rotate(5deg);
+  }
+  
+  .welcome-card.primary .card-icon {
+    background: #dcfce7;
+    color: #16a34a;
+  }
+  
+  .card-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+  
+  .card-desc {
+    color: #64748b;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    flex-grow: 1;
+  }
+  
+  .card-action {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    color: #3b82f6;
+  }
+  
+  .welcome-card.primary .card-action {
+    color: #16a34a;
+  }
+  
+  .welcome-card:hover .card-action svg {
+    transform: translateX(5px);
+  }
+  
+  .card-action svg {
+    transition: transform 0.3s ease;
+  }
+  
+  @media (max-width: 1024px) {
+    .welcome-options {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .welcome-title {
+      font-size: 2.5rem;
+    }
+    .welcome-card {
+      padding: 2rem 1.5rem;
+    }
+    .welcome-options {
+      grid-template-columns: 1fr;
+    }
+  }

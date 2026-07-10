@@ -1,0 +1,90 @@
+/* HERO SECTION */
+.hero {
+  background-color: var(--color-bg-white);
+}
+
+/* GRID */
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  align-items: center;
+  gap: 48px;
+}
+
+/* LEFT CONTENT */
+.hero-content {
+  max-width: 640px;
+}
+
+.hero-eyebrow {
+  display: inline-block;
+  font-size: 12px;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: 22px;
+}
+
+.hero-title {
+  font-size: 52px;
+  line-height: 1.15;
+  margin-bottom: 24px;
+}
+
+.hero-subtitle {
+  font-size: 18px;
+  max-width: 620px;
+  margin-bottom: 40px;
+}
+
+.hero-anim {
+  will-change: transform, opacity;
+}
+
+/* ACTIONS */
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+}
+
+/* BUTTONS (STATIC FOR NOW) */
+.btn-primary {
+  background-color: var(--color-accent);
+  color: #fff;
+  text-decoration: none;
+  padding: 12px 26px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.btn-link {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+/* RIGHT VISUAL — FIXED BOX */
+.hero-visual {
+  width: 100%;
+  max-width: 420px;
+  height: 360px;      /* 🔒 FIXED HEIGHT */
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Force Lottie to fill wrapper safely */
+.hero-visual svg {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .hero-visual {
+    height: 280px;
+    margin: 40px auto 0;
+  }
+}

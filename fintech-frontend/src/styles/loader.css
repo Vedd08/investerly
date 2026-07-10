@@ -1,0 +1,338 @@
+/* Investerly Loader Styles */
+.investerly-loader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  background: #0B1A33;
+  overflow: hidden;
+  will-change: opacity, display;
+}
+
+.loader-container {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  padding: 2rem;
+  z-index: 1;
+}
+
+/* Animated background gradient */
+.loader-bg-gradient {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 150%;
+  height: 150%;
+  background: radial-gradient(circle at center, 
+    rgba(47, 179, 74, 0.08) 0%,
+    rgba(11, 26, 51, 0) 70%);
+  animation: rotate-gradient 20s linear infinite;
+  z-index: 0;
+  pointer-events: none;
+}
+
+@keyframes rotate-gradient {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.loader-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  animation: fade-in-up 0.8s ease-out forwards;
+}
+
+@keyframes fade-in-up {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Logo wrapper with glow effect */
+.logo-wrapper {
+  width: 320px;
+  height: 320px;
+  margin: 0 auto 2rem;
+  position: relative;
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3));
+}
+
+/* Pulsing glow effect */
+.logo-wrapper::before {
+  content: '';
+  position: absolute;
+  top: -15px;
+  left: -15px;
+  right: -15px;
+  bottom: -15px;
+  background: radial-gradient(circle at center, 
+    rgba(47, 179, 74, 0.2) 0%,
+    transparent 70%);
+  border-radius: 50%;
+  animation: pulse-glow 2s ease-in-out infinite;
+  z-index: -1;
+  pointer-events: none;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { 
+    opacity: 0.4; 
+    transform: scale(1); 
+  }
+  50% { 
+    opacity: 0.7; 
+    transform: scale(1.08); 
+  }
+}
+
+.lottie-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.lottie-container svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3));
+}
+
+/* Progress section */
+.progress-section {
+  max-width: 320px;
+  margin: 0 auto 2rem;
+  opacity: 0;
+  animation: fade-in 0.5s ease-out 0.3s forwards;
+}
+
+@keyframes fade-in {
+  to { opacity: 1; }
+}
+
+.progress-bar-container {
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 0.75rem;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.progress-bar-fill {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, #2FB34A, #45D66B, #2FB34A);
+  background-size: 200% 100%;
+  border-radius: 4px;
+  position: relative;
+  transition: width 0.1s linear;
+  will-change: width;
+}
+
+/* Shimmer effect on progress bar */
+.progress-bar-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  animation: shimmer 1.2s infinite;
+  pointer-events: none;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.progress-stats {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  color: white;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.progress-percentage {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #2FB34A;
+  text-shadow: 0 2px 8px rgba(47, 179, 74, 0.4);
+  letter-spacing: -0.5px;
+}
+
+.progress-label {
+  font-size: 0.875rem;
+  opacity: 0.6;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+/* Brand message */
+.brand-message {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  opacity: 0;
+  animation: slide-up 0.6s ease-out 0.6s forwards;
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.brand-name {
+  font-size: 2rem;
+  font-weight: 700;
+  color: white;
+  letter-spacing: -0.5px;
+  text-shadow: 0 2px 12px rgba(47, 179, 74, 0.3);
+  display: inline-block;
+  position: relative;
+}
+
+.brand-name::after {
+  content: '●';
+  color: #2FB34A;
+  font-size: 1.5rem;
+  margin-left: 4px;
+  animation: blink 1.5s infinite;
+  opacity: 0.6;
+  display: inline-block;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+.brand-tagline {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 0.5px;
+  font-weight: 400;
+}
+
+/* Decorative elements */
+.loader-decoration {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, 
+    rgba(47, 179, 74, 0.05) 0%,
+    transparent 70%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.loader-decoration.top-right {
+  top: -150px;
+  right: -150px;
+  animation: float 12s ease-in-out infinite;
+}
+
+.loader-decoration.bottom-left {
+  bottom: -150px;
+  left: -150px;
+  animation: float 12s ease-in-out infinite reverse;
+}
+
+@keyframes float {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  33% { transform: translate(20px, -20px) rotate(120deg); }
+  66% { transform: translate(-20px, 20px) rotate(240deg); }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .logo-wrapper {
+    width: 260px;
+    height: 260px;
+    margin-bottom: 1.5rem;
+  }
+  
+  .brand-name {
+    font-size: 1.75rem;
+  }
+  
+  .progress-section {
+    max-width: 260px;
+    margin-bottom: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo-wrapper {
+    width: 200px;
+    height: 200px;
+    margin-bottom: 1.25rem;
+  }
+  
+  .loader-container {
+    padding: 1rem;
+  }
+  
+  .brand-name {
+    font-size: 1.5rem;
+  }
+  
+  .brand-name::after {
+    font-size: 1.25rem;
+  }
+  
+  .progress-percentage {
+    font-size: 1.25rem;
+  }
+  
+  .progress-label {
+    font-size: 0.75rem;
+  }
+}
+
+/* Performance optimizations */
+@media (prefers-reduced-motion: reduce) {
+  .loader-bg-gradient,
+  .logo-wrapper::before,
+  .progress-bar-fill::after,
+  .loader-decoration,
+  .brand-name::after {
+    animation: none;
+  }
+  
+  .loader-content,
+  .progress-section,
+  .brand-message {
+    animation: none;
+    opacity: 1;
+  }
+}

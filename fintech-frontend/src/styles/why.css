@@ -1,0 +1,82 @@
+/* =====================================================
+   WHY CHOOSE US — STRONG & CLEAR
+   ===================================================== */
+
+.why {
+  background-color: var(--color-bg-white);
+}
+
+/* HEADER */
+.why-eyebrow {
+  display: inline-block;
+  font-size: 12px;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  margin-bottom: 14px;
+}
+
+.why-title {
+  font-size: 36px;
+  line-height: 1.25;
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+/* LIST */
+.why-list {
+  margin-top: 48px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px 48px;
+}
+
+/* ITEM */
+.why-item h4 {
+  font-size: 19px;        /* ↑ from 18px */
+  font-weight: 600;
+  color: var(--color-primary);
+  margin-bottom: 10px;
+}
+
+
+.why-item p {
+  font-size: 16px;                 /* ↑ from 15px */
+  line-height: 1.7;               /* better readability */
+  font-weight: 400;
+  color: var(--color-text-main);
+  max-width: 92%;
+}
+.why-item {
+  position: relative;
+  padding-left: 18px;
+  will-change: transform;
+}
+
+.why-item::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 6px;
+  width: 3px;
+  height: 28px;
+  background-color: var(--color-primary);
+  opacity: 0.9;
+}
+
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .why-title {
+    font-size: 30px;
+  }
+
+  .why-list {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .why-item p {
+    max-width: 100%;
+  }
+}

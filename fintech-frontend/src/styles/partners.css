@@ -1,0 +1,57 @@
+/* =====================================================
+   PARTNERS — TRUST SECTION
+   ===================================================== */
+
+.partners {
+  background-color: var(--color-bg-white);
+  overflow: hidden;
+}
+
+
+.partners-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--color-text-main);
+  margin-bottom: 24px;
+}
+
+/* WRAPPER */
+.partners-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* MOVING TRACK */
+.partners-track {
+  display: flex;
+  align-items: center;
+  gap: 64px;
+  width: max-content;
+}
+
+/* LOGO */
+.partner-logo img {
+  height: 36px;
+  width: auto;
+  filter: grayscale(100%);
+  opacity: 0.7;
+  transition: opacity 0.2s ease, filter 0.2s ease;
+}
+
+/* HOVER EFFECT */
+.partner-logo img:hover {
+  opacity: 1;
+  filter: grayscale(0%);
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .partners-track {
+    gap: 40px;
+  }
+
+  .partner-logo img {
+    height: 30px;
+  }
+}

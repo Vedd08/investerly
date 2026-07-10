@@ -1,0 +1,329 @@
+
+/* Scoped Customized Styling for LIFE-INSURANCE */
+
+.life-insurance-calculator .glass-effect {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 12px 36px rgba(46, 63, 86, 0.08); /* Primary RGB */
+  border-radius: 20px;
+}
+
+.life-insurance-calculator .pulse-animation {
+  animation: pulse-life-insurance 2.5s infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(47, 179, 74, 0.15); /* Accent RGB */
+  color: #2FB34A; /* Accent */
+}
+
+@keyframes pulse-life-insurance {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(47, 179, 74, 0.4); }
+  70% { transform: scale(1.05); box-shadow: 0 0 0 12px rgba(47, 179, 74, 0); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(47, 179, 74, 0); }
+}
+
+.life-insurance-calculator .float-animation {
+  animation: float-life-insurance 3.5s ease-in-out infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(47, 179, 74, 0.15); /* Accent RGB */
+  color: #2FB34A; /* Accent */
+}
+
+@keyframes float-life-insurance {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+  100% { transform: translateY(0); }
+}
+
+.life-insurance-calculator .premium-card {
+  background: linear-gradient(135deg, #2FB34A 0%, #1E8435 100%);
+  position: relative;
+  overflow: hidden;
+  border: none;
+  border-radius: 20px;
+  padding: 2rem;
+  color: white;
+  box-shadow: 0 16px 32px rgba(46, 63, 86, 0.15);
+}
+
+.life-insurance-calculator .card-glow {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.25), transparent 50%);
+  animation: rotate-glow-life-insurance 12s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes rotate-glow-life-insurance {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.life-insurance-calculator .styled-slider {
+  background: linear-gradient(90deg, #2FB34A 0%, #1E8435 100%) !important;
+  height: 8px !important;
+}
+.life-insurance-calculator .styled-slider::-webkit-slider-thumb {
+  border-color: #2FB34A !important;
+  transform: scale(1.1);
+}
+
+.life-insurance-calculator .metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 640px) {
+  .life-insurance-calculator .metrics-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.life-insurance-calculator .metric-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  border: 1px solid rgba(46, 63, 86, 0.08); /* Primary RGB */
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(46, 63, 86, 0.02);
+}
+
+.life-insurance-calculator .metric-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(46, 63, 86, 0.08);
+  border-color: rgba(47, 179, 74, 0.3); /* Accent RGB */
+}
+
+.life-insurance-calculator .action-buttons {
+  display: flex;
+  gap: 1rem;
+  flex-direction: column;
+}
+
+@media (min-width: 640px) {
+  .life-insurance-calculator .action-buttons {
+    flex-direction: row;
+  }
+}
+
+.life-insurance-calculator .highlight {
+  background: rgba(47, 179, 74, 0.12); /* Accent RGB */
+  color: #1E8435;
+  padding: 0.3rem 0.75rem;
+  border-radius: 8px;
+  font-weight: 700;
+  display: inline-block;
+}
+
+.life-insurance-calculator .count-animation {
+  text-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.life-insurance-calculator .slider-range {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  color: rgba(46, 63, 86, 0.6);
+  font-weight: 500;
+}
+
+/* Coverage Gap Meter */
+.life-insurance-calculator .coverage-meter {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  border: 1px solid rgba(46, 63, 86, 0.08);
+}
+
+.life-insurance-calculator .coverage-meter h4 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: #2E3F56;
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.life-insurance-calculator .meter-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.life-insurance-calculator .meter-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #64748B;
+}
+
+.life-insurance-calculator .meter-bar {
+  height: 24px;
+  background: #E2E8F0;
+  border-radius: 12px;
+  display: flex;
+  overflow: hidden;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.06);
+}
+
+.life-insurance-calculator .meter-fill {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 700;
+  transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.life-insurance-calculator .meter-fill.existing {
+  background: linear-gradient(90deg, #1E8435 0%, #2FB34A 100%);
+}
+
+.life-insurance-calculator .meter-fill.gap {
+  background: linear-gradient(90deg, #F59E0B 0%, #D97706 100%);
+}
+
+/* Family Needs Grid */
+.life-insurance-calculator .needs-grid {
+  margin-bottom: 2rem;
+}
+
+.life-insurance-calculator .needs-grid h4 {
+  color: #2E3F56;
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-top: 0;
+  margin-bottom: 1.25rem;
+  border-bottom: 2px solid rgba(47, 179, 74, 0.2);
+  padding-bottom: 0.5rem;
+  display: inline-block;
+}
+
+.life-insurance-calculator .needs-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+@media (max-width: 640px) {
+  .life-insurance-calculator .needs-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+.life-insurance-calculator .need-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 12px;
+  border: 1px solid rgba(46, 63, 86, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.life-insurance-calculator .need-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(47, 179, 74, 0.08);
+  border-color: rgba(47, 179, 74, 0.2);
+}
+
+.life-insurance-calculator .need-icon {
+  font-size: 1.5rem;
+  background: rgba(47, 179, 74, 0.1);
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+}
+
+.life-insurance-calculator .need-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.life-insurance-calculator .need-label {
+  font-size: 0.75rem;
+  color: #64748B;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.life-insurance-calculator .need-value {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #2E3F56;
+}
+
+/* Coverage Calculation Methods List */
+.life-insurance-calculator .methods-section {
+  background: rgba(46, 63, 86, 0.03);
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  border: 1px solid rgba(46, 63, 86, 0.08);
+}
+
+.life-insurance-calculator .methods-section h4 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: #2E3F56;
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.life-insurance-calculator .method-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.life-insurance-calculator .method-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px dashed rgba(46, 63, 86, 0.15);
+}
+
+.life-insurance-calculator .method-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.life-insurance-calculator .method-name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #64748B;
+}
+
+.life-insurance-calculator .method-value {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #1E8435;
+}
