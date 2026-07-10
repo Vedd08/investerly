@@ -57,7 +57,7 @@ const Home = () => {
   useEffect(() => {
     const fetchTestimonials = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/testimonials");
+        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api'}/testimonials`);
         if (response.data.success) {
           const activeTestimonials = response.data.data.filter(t => t.status === 'active');
           setTestimonials(activeTestimonials);

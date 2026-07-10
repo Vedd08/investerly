@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Plus, Edit2, Trash2, X, Video, Image as ImageIcon, FileText } from 'lucide-react';
 
-const API_URL = 'http://localhost:5000/api/testimonials';
+const API_URL = `${import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api'}/testimonials`;
 
 const TestimonialsManager = () => {
   const [testimonials, setTestimonials] = useState([]);
