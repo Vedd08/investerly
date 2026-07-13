@@ -811,12 +811,12 @@ export const generateCorporateReport = async (formData, userName) => {
   doc.setFontSize(7);
   doc.setTextColor(...textColor);
   doc.setFont('helvetica', 'normal');
-  const displayInitial = initialLakhs % 1 === 0 ? initialLakhs.toFixed(0) : initialLakhs.toFixed(1);
-  doc.text(`Equity Lumpsum Invested (Rs. ${displayInitial}L)`, chartX + 18, chartY + 10);
+  const displayInitial = annualLakhs % 1 === 0 ? annualLakhs.toFixed(0) : annualLakhs.toFixed(1);
+  doc.text(`Equity Annual Invested (Rs. ${displayInitial}L)`, chartX + 18, chartY + 10);
 
   doc.setDrawColor(...primaryColor);
   doc.line(chartX + 8, chartY + 14, chartX + 15, chartY + 14);
-  doc.text('Equity Lumpsum Projected (15%)', chartX + 18, chartY + 15);
+  doc.text('Equity Annual Projected (15%)', chartX + 18, chartY + 15);
 
   addFooter(8, 14, formData.clientName);
 
