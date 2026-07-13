@@ -16,6 +16,9 @@ const userRoutes = require("./routes/user.routes");
 
 const app = express();
 
+// Trust proxy for Render deployment (required for express-rate-limit)
+app.set('trust proxy', 1);
+
 // Connect to database
 connectDB();
 
@@ -33,7 +36,8 @@ const allowedOrigins = [
   'http://localhost:5174', // Admin dev server
   'http://127.0.0.1:5173',
   'http://127.0.0.1:5174',
-  process.env.FRONTEND_URL // Production URL
+  'https://investerly.vercel.app', // Explicit production URL
+  process.env.FRONTEND_URL // Additional dynamic production URL
 ].filter(Boolean);
 
 app.use(cors({
