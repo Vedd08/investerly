@@ -60,7 +60,7 @@ const Login = () => {
           <div className="login-selection-container">
             <div 
               className="login-card" 
-              onClick={() => window.location.href = 'https://investerly.in/login.php'}
+              onClick={() => window.location.href = 'https://portal.investerly.in/login.php'}
             >
               <div className="login-card-icon">
                 <UserCircle size={28} />
