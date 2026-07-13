@@ -26,9 +26,10 @@ router.put('/:id', async (req, res) => {
     }
 
     // Only update allowed fields
-    const { name, email } = req.body;
+    const { name, email, contactNumber } = req.body;
     user.name = name || user.name;
     user.email = email || user.email;
+    user.contactNumber = contactNumber || user.contactNumber;
 
     await user.save();
 

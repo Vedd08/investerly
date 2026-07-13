@@ -183,14 +183,14 @@ const ProposalGenerator = () => {
                     <label className="fw-bold mb-2">What is your full name?</label>
                     <div className="input-icon-wrapper">
                       <User className="input-icon" size={20} />
-                      <input type="text" className="proposal-input" style={{ fontSize: '1.1rem', padding: '1rem 1.2rem 1rem 3rem' }} name="clientName" value={formData.clientName} onChange={handleChange} placeholder="e.g. Arvind Sharma" />
+                      <input type="text" className="proposal-input" style={{ fontSize: '1.1rem', padding: '1rem 1.2rem 1rem 3rem' }} name="clientName" value={formData.clientName} onChange={handleChange} placeholder="Enter your full name" />
                     </div>
                   </div>
                   <div className="mb-4">
                     <label className="fw-bold mb-2">What is your current occupation?</label>
                     <div className="input-icon-wrapper">
                       <Briefcase className="input-icon" size={20} />
-                      <input type="text" className="proposal-input" style={{ fontSize: '1.1rem', padding: '1rem 1.2rem 1rem 3rem' }} name="occupation" value={formData.occupation} onChange={handleChange} placeholder="e.g. Medical Practitioner" />
+                      <input type="text" className="proposal-input" style={{ fontSize: '1.1rem', padding: '1rem 1.2rem 1rem 3rem' }} name="occupation" value={formData.occupation} onChange={handleChange} placeholder="Enter your occupation" />
                     </div>
                   </div>
                 </div>

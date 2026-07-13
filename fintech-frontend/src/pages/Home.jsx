@@ -392,7 +392,7 @@ const Home = () => {
               </h1>
               
               <p className="hero-desc">
-                Expert investment and insurance advisory helping individuals and 
+                Expert investment and insurance helping individuals and 
                 businesses achieve financial freedom through structured planning.
               </p>
               
@@ -431,8 +431,8 @@ const Home = () => {
             <div className="value-card">
               <div className="value-icon"><Award size={24} /></div>
               <div className="value-content">
-                <h3>MFAI Registered</h3>
-                <p>Registered Investment Advisor</p>
+                <h3>AMFI Registered</h3>
+                <p>Mutual Fund Distributor</p>
               </div>
             </div>
             
@@ -448,7 +448,7 @@ const Home = () => {
               <div className="value-icon"><Star size={24} /></div>
               <div className="value-content">
                 <h3>4.8 Rating</h3>
-                <p>From 20 reviews</p>
+
               </div>
             </div>
           </div>

@@ -449,7 +449,7 @@ const ServiceDetail = () => {
                   "life-insurance": [
                     { name: "Death Benefit", desc: "Guaranteed payout to nominee" },
                     { name: "Maturity Benefit", desc: "Amount paid on policy maturity" },
-                    { name: "Critical Illness", desc: "Coverage for major illnesses" },
+                    { name: "Critical illness", desc: "Coverage for major illnesses" },
                     { name: "Accidental Death", desc: "Additional cover for accidents" },
                     { name: "Term Rider", desc: "Optional add-on coverage" },
                     { name: "Tax Benefits", desc: "Under Section 80C & 10(10D)" }
@@ -531,7 +531,7 @@ const ServiceDetail = () => {
                 </div>
                 <div className="premium-feature-item">
                   <span className="premium-cta-icon">✦</span>
-                  <span className="feature-text">Client First</span>
+                  <span className="feature-text">Client First Approach</span>
                 </div>
               </div>
             </div>

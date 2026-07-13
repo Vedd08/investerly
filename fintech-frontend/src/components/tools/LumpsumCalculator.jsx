@@ -7,7 +7,7 @@ import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import "../../styles/calculator.css";
 import "../../styles/lumpsum.css";
-import { addReportHeader, addReportFooter } from "../../utils/pdfHelper";
+import { addReportHeader, addReportFooter, addBarChart, addGrowthChart } from "../../utils/pdfHelper";
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -210,11 +210,13 @@ const LumpsumCalculator = () => {
           fillColor: [46, 63, 86],
           textColor: [255, 255, 255],
           fontStyle: 'bold'
-        }
+        },
+        margin: { left: 20, right: 20, bottom: 30 }
       });
       
       // Key Metrics
-      const finalY = doc.lastAutoTable.finalY + 15;
+      doc.addPage();
+      const finalY = 20;
       doc.setFontSize(12);
       doc.setFont("helvetica", "bold");
       doc.text("Key Metrics", 20, finalY);
@@ -225,9 +227,20 @@ const LumpsumCalculator = () => {
       doc.text(`Money Multiplier: ${result.multiplier.toFixed(2)}x`, 25, finalY + 20);
       
       // Disclaimer
+      const disclaimerY = finalY + 35;
       doc.setFontSize(8);
       doc.setTextColor(107, 124, 143);
-      doc.text("*Returns are for illustration only. Actual returns may vary based on market conditions.", 20, doc.internal.pageSize.height - 20);
+      doc.text("*Returns are for illustration only. Actual returns may vary based on market conditions.", 20, disclaimerY);
+      
+      
+      // Add Growth Chart
+      const finalYForChart = disclaimerY + 15;
+      const chartDataForPDF = result.yearlyGrowth.map(item => ({
+        year: item.year,
+        invested: investment,
+        futureValue: item.value
+      }));
+      addGrowthChart(doc, chartDataForPDF, finalYForChart);
       
       addReportFooter(doc);
       doc.save(`Lumpsum_Report_${new Date().toISOString().split('T')[0]}.pdf`);

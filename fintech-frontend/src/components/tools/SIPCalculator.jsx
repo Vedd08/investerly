@@ -6,7 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import "../../styles/calculator.css";
-import { addReportHeader, addReportFooter } from "../../utils/pdfHelper";
+import { addReportHeader, addReportFooter, addBarChart, addGrowthChart } from "../../utils/pdfHelper";
 
 // Register GSAP plugins
 if (typeof window !== 'undefined') {
@@ -237,11 +237,12 @@ const SIPCalculator = () => {
         2: { cellWidth: 50 },
         3: { cellWidth: 50 }
       },
-      margin: { left: 20, right: 20 }
+      margin: { left: 20, right: 20, bottom: 30 }
     });
     
     // Key Metrics
-    yPos = doc.lastAutoTable.finalY + 15;
+    doc.addPage();
+    yPos = 20;
     
     doc.setFontSize(14);
     doc.setFont("helvetica", "bold");
@@ -271,13 +272,19 @@ const SIPCalculator = () => {
     });
     
     // Disclaimer
-    yPos = doc.lastAutoTable.finalY + 45;
+    yPos += 45;
     doc.setFontSize(8);
     doc.setTextColor(107, 124, 143);
     doc.text("*Returns are for illustration only. Actual returns may vary based on market conditions.", 20, yPos);
     
     // Save PDF
-    addReportFooter(doc);
+    
+      // Add Growth Chart
+      const finalYForChart = yPos + 15;
+      // Use addGrowthChart instead of addBarChart for SIP
+      addGrowthChart(doc, chartData, finalYForChart);
+      
+      addReportFooter(doc);
       doc.save(`SIP_Report_${new Date().toISOString().split('T')[0]}.pdf`);
     
   } catch(error) {

@@ -7,7 +7,7 @@ import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import "../../styles/calculator.css";
 import "../../styles/life-insurance.css";
-import { addReportHeader, addReportFooter } from "../../utils/pdfHelper";
+import { addReportHeader, addReportFooter, addBarChart } from "../../utils/pdfHelper";
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -44,13 +44,8 @@ const LifeInsuranceCalculator = () => {
     const liabilityCoverage = totalLiabilities;
     const incomeReplacement = annualIncome * 15; // 15 years income
 
-    // Recommended coverage (average of methods, adjusted for existing coverage)
-    const recommendedCoverage = Math.max(
-      hlvCoverage,
-      expenseCoverage,
-      liabilityCoverage,
-      incomeReplacement
-    ) - existingCoverage;
+    // Recommended coverage: Liability + Income or Expense (whichever is higher), adjusted for existing coverage
+    const recommendedCoverage = (liabilityCoverage + Math.max(incomeReplacement, expenseCoverage)) - existingCoverage;
 
     // Monthly premium estimate (assuming term insurance)
     const premiumRate = 0.001; // Approximate premium rate
@@ -173,7 +168,8 @@ const LifeInsuranceCalculator = () => {
           fillColor: [46, 63, 86],
           textColor: [255, 255, 255],
           fontStyle: 'bold'
-        }
+        },
+        margin: { left: 20, right: 20, bottom: 30 }
       });
 
       // Premium Estimate
@@ -191,6 +187,14 @@ const LifeInsuranceCalculator = () => {
       doc.setTextColor(107, 124, 143);
       doc.text("*This is an estimate. Actual premiums may vary based on health and policy terms.", 20, doc.internal.pageSize.height - 20);
 
+      
+            // Add Bar Chart for Needs
+      doc.addPage();
+      const finalYForChart = 20;
+      if (needsData) {
+        addBarChart(doc, needsData, finalYForChart);
+      }
+      
       addReportFooter(doc);
       doc.save(`Life_Insurance_Report_${new Date().toISOString().split('T')[0]}.pdf`);
     } catch (error) {
@@ -497,10 +501,6 @@ const LifeInsuranceCalculator = () => {
             <div className="methods-section">
               <h4>Coverage Calculation Methods</h4>
               <div className="method-items">
-                <div className="method-item">
-                  <span className="method-name">Human Life Value</span>
-                  <span className="method-value">{formatLargeNumber(result.hlvCoverage)}</span>
-                </div>
                 <div className="method-item">
                   <span className="method-name">Expense Method</span>
                   <span className="method-value">{formatLargeNumber(result.expenseCoverage)}</span>

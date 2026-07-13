@@ -7,7 +7,7 @@ import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import "../../styles/calculator.css";
 import { MapPin, Utensils, Sparkles, Gem } from "lucide-react";
-import { addReportHeader, addReportFooter } from "../../utils/pdfHelper";
+import { addReportHeader, addReportFooter, addGrowthChart } from "../../utils/pdfHelper";
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -62,7 +62,19 @@ const MarriagePlanningCalculator = () => {
     // Monthly investment needed if starting from zero
     const requiredMonthly = futureCost * monthlyRate / ((Math.pow(1 + monthlyRate, monthsToMarriage) - 1) * (1 + monthlyRate));
     
+    // Yearly breakdown
+    const yearlyProjection = [];
+    for (let year = 1; year <= yearsToMarriage; year++) {
+      const yearValue = currentSavings * Math.pow(1 + returnRate / 100, year) +
+        monthlySIP * 12 * ((Math.pow(1 + returnRate / 100, year) - 1) / (returnRate / 100));
+      yearlyProjection.push({
+        year,
+        value: yearValue
+      });
+    }
+
     return {
+      yearlyProjection,
       currentCost: totalCurrentCost,
       futureCost,
       futureSavings,
@@ -167,7 +179,8 @@ const MarriagePlanningCalculator = () => {
         columnStyles: {
           0: { fontStyle: 'bold' },
           1: { halign: 'right' }
-        }
+        },
+        margin: { left: 20, right: 20, bottom: 30 }
       });
       
       // Future Cost
@@ -193,6 +206,19 @@ const MarriagePlanningCalculator = () => {
       doc.setFontSize(8);
       doc.setTextColor(107, 124, 143);
       doc.text("*This is an estimate. Actual costs may vary based on location and preferences.", 20, doc.internal.pageSize.height - 20);
+      
+      
+            // Add Growth Chart
+      doc.addPage();
+      const finalYForChart = 20;
+      if (result && result.yearlyProjection) {
+        const chartDataForPDF = result.yearlyProjection.map(item => ({
+          year: item.year,
+          invested: item.value,
+          futureValue: item.value
+        }));
+        addGrowthChart(doc, chartDataForPDF, finalYForChart);
+      }
       
       addReportFooter(doc);
       doc.save(`Marriage_Calculator_${new Date().toISOString().split('T')[0]}.pdf`);

@@ -7,7 +7,7 @@ import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import "../../styles/calculator.css";
 import "../../styles/tax.css";
-import { addReportHeader, addReportFooter } from "../../utils/pdfHelper";
+import { addReportHeader, addReportFooter, addBarChart } from "../../utils/pdfHelper";
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -17,6 +17,7 @@ const TaxCalculator = () => {
   const [annualIncome, setAnnualIncome] = useState(1200000);
   const [age, setAge] = useState(30);
   const [regime, setRegime] = useState('new'); // 'old' or 'new'
+  const [employmentType, setEmploymentType] = useState('salaried'); // 'salaried' or 'business'
 
   // Deductions (Old Regime)
   const [section80C, setSection80C] = useState(150000);
@@ -106,14 +107,17 @@ const TaxCalculator = () => {
       // Donations (simplified)
       oldRegimeDeductions += donations;
 
-      // Standard Deduction
-      oldRegimeDeductions += standardDeduction;
+      // Standard Deduction (Only for Salaried)
+      if (employmentType === 'salaried') {
+        oldRegimeDeductions += standardDeduction;
+      }
 
       oldRegimeTaxable = Math.max(0, annualIncome - oldRegimeDeductions);
     }
 
     // Calculate tax for selected regime
-    const taxableIncome = regime === 'old' ? oldRegimeTaxable : annualIncome - standardDeduction;
+    const effectiveStandardDeduction = employmentType === 'salaried' ? standardDeduction : 0;
+    const taxableIncome = regime === 'old' ? oldRegimeTaxable : Math.max(0, annualIncome - effectiveStandardDeduction);
 
     let tax = 0;
     let remainingIncome = taxableIncome;
@@ -151,9 +155,10 @@ const TaxCalculator = () => {
     // Calculate savings between regimes
     // For comparison, calculate tax in both regimes
     const calculateOtherRegimeTax = () => {
+      const effectiveStandardDeduction = employmentType === 'salaried' ? standardDeduction : 0;
       if (regime === 'old') {
         // Calculate new regime tax
-        const newRegimeTaxable = annualIncome - 100000; // Only standard deduction
+        const newRegimeTaxable = Math.max(0, annualIncome - effectiveStandardDeduction);
         let newTax = 0;
         let remainingNew = newRegimeTaxable;
         let prevLimit = 0;
@@ -181,7 +186,7 @@ const TaxCalculator = () => {
         // Calculate old regime tax
         let oldDeductions = Math.min(section80C, 150000) +
           Math.min(section80D, age < 60 ? 25000 : 50000) +
-          standardDeduction; // Standard deduction
+          effectiveStandardDeduction; // Standard deduction
         const oldTaxable = Math.max(0, annualIncome - oldDeductions);
         let oldTax = 0;
         let remainingOld = oldTaxable;
@@ -218,7 +223,7 @@ const TaxCalculator = () => {
     return {
       grossIncome: annualIncome,
       taxableIncome,
-      totalDeductions: regime === 'old' ? oldRegimeDeductions : standardDeduction,
+      totalDeductions: regime === 'old' ? oldRegimeDeductions : (employmentType === 'salaried' ? standardDeduction : 0),
       tax,
       cess,
       totalTax,
@@ -230,7 +235,7 @@ const TaxCalculator = () => {
       betterRegime,
       regime
     };
-  }, [annualIncome, age, regime, section80C, section80D, hra, lta,
+  }, [annualIncome, age, regime, employmentType, section80C, section80D, hra, lta,
     homeLoanInterest, nps, educationLoan, donations, standardDeduction, getTaxSlabs]);
 
   useEffect(() => {
@@ -344,7 +349,8 @@ const TaxCalculator = () => {
         columnStyles: {
           0: { fontStyle: 'bold' },
           1: { halign: 'right' }
-        }
+        },
+        margin: { left: 20, right: 20, bottom: 30 }
       });
 
       // Regime Comparison
@@ -364,6 +370,14 @@ const TaxCalculator = () => {
       doc.setTextColor(107, 124, 143);
       doc.text("*This is an estimate. Consult a tax advisor for accurate planning.", 20, doc.internal.pageSize.height - 20);
 
+      
+            // Add Bar Chart for Tax Summary
+      doc.addPage();
+      const finalYForChart = 20;
+      if (summaryData) {
+        addBarChart(doc, summaryData, finalYForChart);
+      }
+      
       addReportFooter(doc);
       doc.save(`Tax_Report_${new Date().toISOString().split('T')[0]}.pdf`);
     } catch (error) {
@@ -394,6 +408,27 @@ const TaxCalculator = () => {
             <div className="input-header">
               <div className="input-icon pulse-animation"><Receipt size={24} /></div>
               <h3>Income & Deductions</h3>
+            </div>
+
+            {/* Employment Type */}
+            <div className="employment-selector" style={{ marginBottom: '1.5rem' }}>
+              <label className="input-label">Employment Type</label>
+              <div className="regime-buttons" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                <button
+                  className={`regime-btn ${employmentType === 'salaried' ? 'active' : ''}`}
+                  onClick={() => setEmploymentType('salaried')}
+                  style={{ minHeight: 'auto', padding: '1rem' }}
+                >
+                  <span className="regime-name">Salaried</span>
+                </button>
+                <button
+                  className={`regime-btn ${employmentType === 'business' ? 'active' : ''}`}
+                  onClick={() => setEmploymentType('business')}
+                  style={{ minHeight: 'auto', padding: '1rem' }}
+                >
+                  <span className="regime-name">Business / Professional</span>
+                </button>
+              </div>
             </div>
 
             {/* Basic Info */}
@@ -654,7 +689,7 @@ const TaxCalculator = () => {
             )}
 
             {/* New Regime - Standard Deduction */}
-            {regime === 'new' && (
+            {regime === 'new' && employmentType === 'salaried' && (
               <div className="deductions-section">
                 <h4>Standard Deduction</h4>
                 <div className="input-group">

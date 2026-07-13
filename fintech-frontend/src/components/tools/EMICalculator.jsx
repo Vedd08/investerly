@@ -7,7 +7,7 @@ import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import "../../styles/calculator.css";
 import "../../styles/emi.css";
-import { addReportHeader, addReportFooter } from "../../utils/pdfHelper";
+import { addReportHeader, addReportFooter, addAmortizationChart } from "../../utils/pdfHelper";
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -236,6 +236,21 @@ const EMICalculator = () => {
       doc.setFontSize(8);
       doc.setTextColor(107, 124, 143);
       doc.text("*EMI calculations are approximate. Final terms depend on lender's policies.", 20, doc.internal.pageSize.height - 20);
+      
+      
+      
+      // Add Amortization Chart
+      doc.addPage();
+      const finalYForChart = 20;
+      if (result && result.yearlyBreakdown) {
+        const mappedSchedule = result.yearlyBreakdown.map(item => ({
+          year: item.year,
+          principalPaid: item.principal,
+          interestPaid: item.interest
+        }));
+        addAmortizationChart(doc, mappedSchedule, finalYForChart);
+      }
+
       
       addReportFooter(doc);
       doc.save(`EMI_Report_${new Date().toISOString().split('T')[0]}.pdf`);

@@ -166,7 +166,7 @@
 }
 
 .benefit-content p {
-  font-size: 0.75rem;
+  font-size: 21px;
   color: var(--color-text-muted);
   margin: 0;
   line-height: 1.4;
@@ -573,7 +573,7 @@
   }
   
   .benefit-content p {
-    font-size: 0.7rem;
+    font-size: 0.9rem;
   }
 }
 

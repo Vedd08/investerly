@@ -149,10 +149,11 @@ const AlertIcon = () => (
 );
 
 const socialLinks = [
-  { Icon: SocialIcons.Facebook, name: "Facebook", url: "https://facebook.com/investerly" },
-  { Icon: SocialIcons.Instagram, name: "Instagram", url: "https://instagram.com/investerly" },
-  { Icon: SocialIcons.Twitter, name: "Twitter", url: "https://twitter.com/investerly" },
-  { Icon: SocialIcons.LinkedIn, name: "LinkedIn", url: "https://linkedin.com/company/investerly" },
+  // Links temporarily removed as they are not currently maintained by the client
+  // { Icon: SocialIcons.Facebook, name: "Facebook", url: "https://facebook.com/investerly" },
+  // { Icon: SocialIcons.Instagram, name: "Instagram", url: "https://instagram.com/investerly" },
+  // { Icon: SocialIcons.Twitter, name: "Twitter", url: "https://twitter.com/investerly" },
+  // { Icon: SocialIcons.LinkedIn, name: "LinkedIn", url: "https://linkedin.com/company/investerly" },
 ];
 
   return (
@@ -166,10 +167,10 @@ const socialLinks = [
           <div className="footer-section footer-brand">
             <h4 className="footer-logo">
               <span className="logo-text">INVESTERLY</span>
-              <span className="logo-badge">MFAI Registered</span>
+              <span className="logo-badge">AMFI Registered</span>
             </h4>
             <p className="footer-desc">
-              Investment and insurance advisory platform focused on long-term
+              Investment and insurance advisory platform focused on long-term or short term
               financial clarity, discipline, and trust. We help individuals and 
               businesses make informed financial decisions.
             </p>
@@ -195,8 +196,8 @@ const socialLinks = [
           <div className="footer-section">
             <h5>Our Services</h5>
             <ul className="footer-links-list">
-              <li><Link to="/services/mutual-funds">Mutual Funds</Link></li>
-              <li><Link to="/services/sip">Systematic Investment Plan (SIP)</Link></li>
+              <li><Link to="/services/mutual-funds">Mutual Funds & SIP</Link></li>
+              <li><Link to="/services/pms">PMS</Link></li>
               <li><Link to="/services/aif">Alternative Investment Funds (AIF)</Link></li>
               <li><Link to="/services/life-insurance">Life Insurance</Link></li>
               <li><Link to="/services/health-insurance">Health Insurance</Link></li>
@@ -250,7 +251,7 @@ const socialLinks = [
 
             <div className="footer-timing">
               <span className="timing-icon"><ClockIcon /></span>
-              <span>Mon - Sat: 9:00 AM - 7:00 PM</span>
+              <span>Mon - Sat: 10:00 AM - 7:00 PM</span>
             </div>
 
             {/* Design Credit */}

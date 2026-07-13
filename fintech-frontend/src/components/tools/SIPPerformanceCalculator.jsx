@@ -7,7 +7,7 @@ import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import "../../styles/calculator.css";
 import "../../styles/sip-performance.css";
-import { addReportHeader, addReportFooter } from "../../utils/pdfHelper";
+import { addReportHeader, addReportFooter, addGrowthChart } from "../../utils/pdfHelper";
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -247,7 +247,8 @@ const SIPPerformanceCalculator = () => {
         columnStyles: {
           0: { fontStyle: 'bold' },
           1: { halign: 'right' }
-        }
+        },
+        margin: { left: 20, right: 20, bottom: 30 }
       });
       
       // Scenario Analysis
@@ -269,13 +270,27 @@ const SIPPerformanceCalculator = () => {
         columnStyles: {
           0: { fontStyle: 'bold' },
           1: { halign: 'right' }
-        }
+        },
+        margin: { left: 20, right: 20, bottom: 30 }
       });
       
       // Disclaimer
       doc.setFontSize(8);
       doc.setTextColor(107, 124, 143);
       doc.text("*This is a simulated performance. Actual returns may vary based on market conditions.", 20, doc.internal.pageSize.height - 20);
+      
+      
+            // Add Growth Chart
+      doc.addPage();
+      const finalYForChart = 20;
+      if (result && result.yearlyData) {
+        const chartDataForPDF = result.yearlyData.map(item => ({
+          year: item.year,
+          invested: item.invested,
+          futureValue: item.value
+        }));
+        addGrowthChart(doc, chartDataForPDF, finalYForChart);
+      }
       
       addReportFooter(doc);
       doc.save(`SIP_Performance_${new Date().toISOString().split('T')[0]}.pdf`);

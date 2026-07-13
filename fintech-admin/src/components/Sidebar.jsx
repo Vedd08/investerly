@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { MessageSquare, LogOut } from 'lucide-react';
+import { MessageSquare, LogOut, Users } from 'lucide-react';
 import logo1 from '../assets/logo1.svg';
 import logo2 from '../assets/logo2.svg';
 
@@ -16,6 +16,10 @@ const Sidebar = () => {
         <NavLink to="/" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`} end>
           <MessageSquare size={20} />
           Testimonials
+        </NavLink>
+        <NavLink to="/users" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
+          <Users size={20} />
+          Clients / Users
         </NavLink>
       </nav>
 

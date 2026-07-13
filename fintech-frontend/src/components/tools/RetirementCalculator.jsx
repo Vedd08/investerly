@@ -7,7 +7,7 @@ import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import "../../styles/calculator.css";
 import "../../styles/retirement.css";
-import { addReportHeader, addReportFooter } from "../../utils/pdfHelper";
+import { addReportHeader, addReportFooter, addBarChart, addGrowthChart } from "../../utils/pdfHelper";
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -255,6 +255,17 @@ const RetirementCalculator = () => {
       doc.setFontSize(8);
       doc.setTextColor(107, 124, 143);
       doc.text("*This is an estimated projection. Actual returns may vary based on market conditions.", 20, doc.internal.pageSize.height - 20);
+      
+      
+      // Add Growth Chart
+      doc.addPage();
+      const finalYForChart = 20;
+      const chartDataForPDF = result.projection.map(item => ({
+        year: item.year,
+        invested: item.type === 'accumulation' ? item.value : 0,
+        futureValue: item.value
+      }));
+      addGrowthChart(doc, chartDataForPDF, finalYForChart);
       
       addReportFooter(doc);
       doc.save(`Retirement_Report_${new Date().toISOString().split('T')[0]}.pdf`);

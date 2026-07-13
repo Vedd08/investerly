@@ -7,7 +7,7 @@ import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import "../../styles/calculator.css";
 import "../../styles/education.css";
-import { addReportHeader, addReportFooter } from "../../utils/pdfHelper";
+import { addReportHeader, addReportFooter, addGrowthChart } from "../../utils/pdfHelper";
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -200,7 +200,8 @@ const EducationPlanningCalculator = () => {
         columnStyles: {
           0: { fontStyle: 'bold' },
           1: { halign: 'right' }
-        }
+        },
+        margin: { left: 20, right: 20, bottom: 30 }
       });
 
       // Investment Required
@@ -218,6 +219,19 @@ const EducationPlanningCalculator = () => {
       doc.setTextColor(107, 124, 143);
       doc.text("*This is an estimate. Actual education costs may vary based on institution and location.", 20, doc.internal.pageSize.height - 20);
 
+      
+            // Add Growth Chart
+      doc.addPage();
+      const finalYForChart = 20;
+      if (result && result.yearlyProjection) {
+        const chartDataForPDF = result.yearlyProjection.map(item => ({
+          year: item.year,
+          invested: item.value,
+          futureValue: item.value
+        }));
+        addGrowthChart(doc, chartDataForPDF, finalYForChart);
+      }
+      
       addReportFooter(doc);
       doc.save(`Education_Plan_${new Date().toISOString().split('T')[0]}.pdf`);
     } catch (error) {

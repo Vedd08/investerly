@@ -9,6 +9,7 @@ import '../styles/login.css';
 const Register = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [contactNumber, setContactNumber] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -19,7 +20,7 @@ const Register = () => {
     e.preventDefault();
     setError('');
     
-    if (!name || !email || !password) {
+    if (!name || !email || !contactNumber || !password) {
       return setError('Please fill in all fields');
     }
 
@@ -28,7 +29,7 @@ const Register = () => {
     }
 
     setIsSubmitting(true);
-    const res = await register(name, email, password);
+    const res = await register(name, email, contactNumber, password);
     setIsSubmitting(false);
 
     if (res.success) {
@@ -66,7 +67,7 @@ const Register = () => {
               className="input-premium"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="e.g. Arvind Sharma"
+              placeholder="Enter your full name"
               required
             />
           </div>
@@ -79,6 +80,18 @@ const Register = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="name@company.com"
+              required
+            />
+          </div>
+
+          <div className="input-group-premium">
+            <label>Contact Number</label>
+            <input 
+              type="tel" 
+              className="input-premium"
+              value={contactNumber}
+              onChange={(e) => setContactNumber(e.target.value)}
+              placeholder="e.g. +91 9876543210"
               required
             />
           </div>

@@ -13,7 +13,7 @@ const services = {
       "Start with as low as ₹500 monthly SIP",
       "Professional fund management",
       "Power of rupee cost averaging",
-      "Tax efficiency planning through ELSS"
+      "Unlock the Power of Compounding"
     ],
     benefits: [
       "Disciplined investing through SIPs",
@@ -28,7 +28,7 @@ const services = {
       },
       {
         q: "How do you select mutual funds for SIP?",
-        a: "We analyze fund performance, manager track record, expense ratios, and alignment with your goals. We also consider the fund's consistency in SIP returns."
+        a: "Analyze fund performance, manager track record, expense ratios, and alignment with your goals. Also consider the fund's consistency in SIP returns."
       },
       {
         q: "Can I start multiple SIPs?",
@@ -200,7 +200,7 @@ const services = {
     "Regular performance reporting"
   ],
   features: [
-    "Minimum investment: ₹50K",
+    "Minimum investment: ₹50 lakhs",
     "Direct equity/debt investments",
     "Professional fund management",
     "Customized portfolio as per risk profile",
@@ -224,7 +224,7 @@ const services = {
     },
     {
       q: "What are the fees in PMS?",
-      a: "PMS typically charges management fees (1-2.5% p.a.) and performance fees (profit sharing). The exact structure varies by provider."
+      a: "PMS typically charges management fees (2-2.5% p.a.) and performance fees (profit sharing). The exact structure varies by provider."
     }
   ]
 },
@@ -258,7 +258,7 @@ const services = {
       },
       {
         q: "Term insurance or investment plans?",
-        a: "We recommend term insurance for pure protection and separate investments for wealth creation."
+        a: "It is recommended term insurance for pure protection and separate investments for wealth creation."
       }
     ]
   },

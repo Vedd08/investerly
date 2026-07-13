@@ -21,6 +21,7 @@ const generateToken = (id) => {
 router.post('/register', [
   body('name').trim().notEmpty().withMessage('Name is required'),
   body('email').isEmail().withMessage('Valid email is required'),
+  body('contactNumber').trim().notEmpty().withMessage('Contact number is required'),
   body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters')
 ], async (req, res) => {
   const errors = validationResult(req);
@@ -29,7 +30,7 @@ router.post('/register', [
   }
   
   try {
-    const { name, email, password } = req.body;
+    const { name, email, contactNumber, password } = req.body;
 
     // Check if user exists
     const userExists = await User.findOne({ email });
@@ -42,6 +43,7 @@ router.post('/register', [
     const user = await User.create({
       name,
       email,
+      contactNumber,
       password,
     });
 

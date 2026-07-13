@@ -7,7 +7,7 @@ import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import "../../styles/calculator.css";
 import "../../styles/fund-performance.css";
-import { addReportHeader, addReportFooter } from "../../utils/pdfHelper";
+import { addReportHeader, addReportFooter, addGrowthChart } from "../../utils/pdfHelper";
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -19,11 +19,13 @@ const FundPerformanceCalculator = () => {
   const [timePeriod, setTimePeriod] = useState(5);
   const [investmentType, setInvestmentType] = useState('sip'); // 'sip' or 'lumpsum'
   const [monthlySIP, setMonthlySIP] = useState(10000);
+  const [isLoadingData, setIsLoadingData] = useState(true);
 
   // Fund categories with historical returns
-  const fundCategories = {
+  const [fundCategories, setFundCategories] = useState({
     parag_parikh_flexi: {
       name: 'Parag Parikh Flexi Cap',
+      schemeCode: '122639',
       returns: { '1': 38.5, '3': 22.1, '5': 24.8, '10': 20.2 },
       risk: 'Very High',
       expense: 0.75,
@@ -35,6 +37,7 @@ const FundPerformanceCalculator = () => {
     },
     nippon_small_cap: {
       name: 'Nippon India Small Cap',
+      schemeCode: '118778',
       returns: { '1': 54.2, '3': 35.8, '5': 31.4, '10': 26.5 },
       risk: 'Very High',
       expense: 0.68,
@@ -46,6 +49,7 @@ const FundPerformanceCalculator = () => {
     },
     sbi_small_cap: {
       name: 'SBI Small Cap Fund',
+      schemeCode: '125497',
       returns: { '1': 42.1, '3': 28.5, '5': 26.2, '10': 24.8 },
       risk: 'Very High',
       expense: 0.71,
@@ -57,6 +61,7 @@ const FundPerformanceCalculator = () => {
     },
     hdfc_mid_cap: {
       name: 'HDFC Mid-Cap Opportunities',
+      schemeCode: '118989',
       returns: { '1': 48.5, '3': 30.2, '5': 25.8, '10': 21.5 },
       risk: 'High',
       expense: 0.85,
@@ -68,6 +73,7 @@ const FundPerformanceCalculator = () => {
     },
     icici_bluechip: {
       name: 'ICICI Pru Bluechip',
+      schemeCode: '120586',
       returns: { '1': 28.5, '3': 18.2, '5': 16.5, '10': 15.2 },
       risk: 'Moderate',
       expense: 0.95,
@@ -79,6 +85,7 @@ const FundPerformanceCalculator = () => {
     },
     quant_active: {
       name: 'Quant Active Fund',
+      schemeCode: '120823',
       returns: { '1': 45.2, '3': 32.5, '5': 29.8, '10': 22.4 },
       risk: 'Very High',
       expense: 0.77,
@@ -90,6 +97,7 @@ const FundPerformanceCalculator = () => {
     },
     mirae_tax_saver: {
       name: 'Mirae Asset Tax Saver',
+      schemeCode: '135781',
       returns: { '1': 32.5, '3': 20.8, '5': 18.5, '10': 17.8 },
       risk: 'High',
       expense: 0.65,
@@ -101,6 +109,7 @@ const FundPerformanceCalculator = () => {
     },
     sbi_magnum_gilt: {
       name: 'SBI Magnum Gilt',
+      schemeCode: '119598',
       returns: { '1': 8.2, '3': 7.5, '5': 7.8, '10': 8.5 },
       risk: 'Low',
       expense: 0.45,
@@ -110,7 +119,7 @@ const FundPerformanceCalculator = () => {
       color: '#7f8c8d',
       description: 'Invests predominantly in government securities.'
     }
-  };
+  });
 
   const sectionRef = useRef(null);
   const resultRef = useRef(null);
@@ -197,9 +206,79 @@ const FundPerformanceCalculator = () => {
       returnsRatio: (totalReturns / totalInvested) * 100,
       wealthRatio: futureValue / totalInvested
     };
-  }, [fundType, timePeriod, investment, investmentType, monthlySIP]);
+  }, [fundType, timePeriod, investment, investmentType, monthlySIP, fundCategories]);
 
   useEffect(() => {
+    const fetchLiveData = async () => {
+      try {
+        const promises = Object.entries(fundCategories).map(async ([key, fund]) => {
+          if (!fund.schemeCode) return { key, returns: fund.returns };
+          
+          try {
+            const res = await fetch(`https://api.mfapi.in/mf/${fund.schemeCode}`);
+            const json = await res.json();
+            const data = json.data;
+            
+            if (!data || data.length === 0) return { key, returns: fund.returns };
+
+            const calculateReturn = (yearsAgo) => {
+              const today = new Date();
+              const targetDate = new Date();
+              targetDate.setFullYear(today.getFullYear() - yearsAgo);
+              
+              let oldNav = null;
+              for (let i = 0; i < data.length; i++) {
+                const parts = data[i].date.split('-');
+                const dateObj = new Date(parts[2], parts[1] - 1, parts[0]);
+                if (dateObj <= targetDate) {
+                  oldNav = parseFloat(data[i].nav);
+                  break;
+                }
+              }
+              if (!oldNav) oldNav = parseFloat(data[data.length - 1].nav);
+              
+              const currentNav = parseFloat(data[0].nav);
+              const cagr = (Math.pow(currentNav / oldNav, 1 / yearsAgo) - 1) * 100;
+              return parseFloat(cagr.toFixed(2));
+            };
+
+            return {
+              key,
+              returns: {
+                '1': calculateReturn(1),
+                '3': calculateReturn(3),
+                '5': calculateReturn(5),
+                '10': calculateReturn(10)
+              }
+            };
+          } catch (e) {
+            console.error(`Failed to fetch for ${fund.name}`, e);
+            return { key, returns: fund.returns };
+          }
+        });
+
+        const results = await Promise.all(promises);
+        
+        setFundCategories(prev => {
+          const updated = { ...prev };
+          results.forEach(({ key, returns }) => {
+            updated[key] = { ...updated[key], returns };
+          });
+          return updated;
+        });
+      } catch (e) {
+        console.error("Error updating live returns", e);
+      } finally {
+        setIsLoadingData(false);
+      }
+    };
+
+    fetchLiveData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (isLoadingData) return;
     const ctx = gsap.context(() => {
       gsap.from(".calculator-header", {
         scrollTrigger: {
@@ -239,7 +318,7 @@ const FundPerformanceCalculator = () => {
     }, sectionRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [isLoadingData]);
 
   const formatCurrency = (num, forPDF = false) => {
     if (!num || isNaN(num)) return forPDF ? 'Rs. 0' : '₹0';
@@ -317,7 +396,8 @@ const FundPerformanceCalculator = () => {
         columnStyles: {
           0: { fontStyle: 'bold' },
           1: { halign: 'right' }
-        }
+        },
+        margin: { left: 20, right: 20, bottom: 30 }
       });
       
       // Risk Metrics
@@ -340,13 +420,27 @@ const FundPerformanceCalculator = () => {
         columnStyles: {
           0: { fontStyle: 'bold' },
           1: { halign: 'right' }
-        }
+        },
+        margin: { left: 20, right: 20, bottom: 30 }
       });
       
       // Disclaimer
       doc.setFontSize(8);
       doc.setTextColor(107, 124, 143);
       doc.text("*Past performance does not guarantee future returns. Mutual fund investments are subject to market risks.", 20, doc.internal.pageSize.height - 20);
+      
+      
+            // Add Growth Chart
+      doc.addPage();
+      const finalYForChart = 20;
+      if (result && result.yearlyBreakdown) {
+        const chartDataForPDF = result.yearlyBreakdown.map(item => ({
+          year: item.year,
+          invested: item.invested,
+          futureValue: item.value
+        }));
+        addGrowthChart(doc, chartDataForPDF, finalYForChart);
+      }
       
       addReportFooter(doc);
       doc.save(`Fund_Performance_${new Date().toISOString().split('T')[0]}.pdf`);
@@ -373,8 +467,18 @@ const FundPerformanceCalculator = () => {
         </div>
 
         <div className="calculator-grid">
-          {/* INPUT PANEL */}
-          <div className="calc-inputs glass-effect">
+          {isLoadingData ? (
+             <div className="loading-container" style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '4rem', color: 'var(--text-secondary)' }}>
+                <div className="pulse-animation" style={{ marginBottom: '1rem', display: 'flex', justifyContent: 'center' }}>
+                  <BarChart3 size={48} />
+                </div>
+                <h3>Fetching Live Market Data...</h3>
+                <p>Please wait while we calculate real-time returns.</p>
+             </div>
+          ) : (
+            <>
+              {/* INPUT PANEL */}
+              <div className="calc-inputs glass-effect">
             <div className="input-header">
               <div className="input-icon pulse-animation"><BarChart3 size={24} /></div>
               <h3>Fund Selection</h3>
@@ -638,6 +742,8 @@ const FundPerformanceCalculator = () => {
               *Past performance does not guarantee future returns. Mutual fund investments are subject to market risks.
             </p>
           </div>
+            </>
+          )}
         </div>
       </div>
     </section>

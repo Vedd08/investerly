@@ -6,7 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import "../../styles/calculator.css";
-import { addReportHeader, addReportFooter } from "../../utils/pdfHelper";
+import { addReportHeader, addReportFooter, addAmortizationChart } from "../../utils/pdfHelper";
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -191,6 +191,16 @@ const HomeLoanCalculator = () => {
       doc.setTextColor(107, 124, 143);
       doc.text("*This is an estimate. Actual loan terms depend on bank policies and credit assessment.", 20, doc.internal.pageSize.height - 20);
 
+      
+      
+      // Add Amortization Chart
+      doc.addPage();
+      const finalYForChart = 20;
+      if (result && result.yearlySchedule) {
+        addAmortizationChart(doc, result.yearlySchedule, finalYForChart);
+      }
+
+      
       addReportFooter(doc);
       doc.save(`Home_Loan_Report_${new Date().toISOString().split('T')[0]}.pdf`);
     } catch (error) {
@@ -469,6 +479,9 @@ const HomeLoanCalculator = () => {
                   </span>
                 </div>
               </div>
+            </div>
+            <div style={{ textAlign: 'right', marginTop: '-0.5rem', marginBottom: '1.5rem', fontSize: '0.85rem', color: 'var(--primary)', fontWeight: '500', fontStyle: 'italic' }}>
+              *Only Available in Old Regime
             </div>
 
             {/* Action Buttons */}

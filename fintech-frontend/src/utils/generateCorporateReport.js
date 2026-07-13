@@ -248,22 +248,24 @@ export const generateCorporateReport = async (formData, userName) => {
   doc.setTextColor(...textColor);
   doc.setFont('helvetica', 'normal');
   
-  const aboutText1 = `Investerly Financial Services Pvt. Ltd. is a AMFI-registered investment advisory firm committed to helping individuals and families build lasting wealth through disciplined, goal-based financial planning. We combine deep market expertise with a personalized approach to craft strategies tailored to your unique life goals.`;
+  const aboutText1 = `Investerly Financial Services Pvt. Ltd. is a AMFI-registered investment distributor committed to helping individuals and families build lasting wealth through disciplined, goal-based financial planning. We combine deep market expertise with a personalized approach to craft strategies tailored to your unique life goals.`;
 
   const aboutText2 = `Our team of qualified financial advisors brings together decades of experience across equity markets, insurance planning, and tax-efficient wealth creation. Whether you are a working professional, a business owner, or a medical practitioner like ${formData.clientName}, we understand that every financial journey is unique.`;
 
   const aboutText3 = `At Investerly, we do not believe in one-size-fits-all solutions. We sit with you, understand what truly matters, and then design an investment strategy that grows with you — through market cycles, life changes, and evolving goals.`;
 
-  const split1 = doc.splitTextToSize(aboutText1, pageWidth - 2 * margin);
-  doc.text(split1, margin, yPos);
+  const maxWidth = pageWidth - 2 * margin;
+
+  const split1 = doc.splitTextToSize(aboutText1, maxWidth);
+  doc.text(aboutText1, margin, yPos, { maxWidth: maxWidth, align: 'justify' });
   yPos += split1.length * 5 + 5;
 
-  const split2 = doc.splitTextToSize(aboutText2, pageWidth - 2 * margin);
-  doc.text(split2, margin, yPos);
+  const split2 = doc.splitTextToSize(aboutText2, maxWidth);
+  doc.text(aboutText2, margin, yPos, { maxWidth: maxWidth, align: 'justify' });
   yPos += split2.length * 5 + 5;
 
-  const split3 = doc.splitTextToSize(aboutText3, pageWidth - 2 * margin);
-  doc.text(split3, margin, yPos);
+  const split3 = doc.splitTextToSize(aboutText3, maxWidth);
+  doc.text(aboutText3, margin, yPos, { maxWidth: maxWidth, align: 'justify' });
   yPos += split3.length * 5 + 15;
 
   // 4 Quadrant Blue Box
@@ -563,15 +565,46 @@ export const generateCorporateReport = async (formData, userName) => {
   doc.text(sipSplit, margin, yPos);
   yPos += sipSplit.length * 5 + 10;
 
+  // SIP Calculation logic
+  let sipTotalVal = 75000;
+  if (formData.sipTotal) {
+      sipTotalVal = parseFloat(String(formData.sipTotal).replace(/[^0-9.]/g, '')) || 75000;
+  }
+  let sip1 = sipTotalVal * 0.40;
+  let sip2 = sipTotalVal * 0.30;
+  let sip3 = sipTotalVal * 0.30;
+
+  const calcStepUp = (monthly, stepUp, ret, yrs) => {
+      const months = yrs * 12;
+      const rate = ret / 12 / 100;
+      let total = 0;
+      let curr = monthly;
+      for (let y = 1; y <= yrs; y++) {
+          for (let m = 1; m <= 12; m++) {
+              total += curr * Math.pow(1 + rate, months - ((y - 1) * 12 + m) + 1);
+          }
+          curr *= (1 + stepUp / 100);
+      }
+      return total;
+  };
+  
+  let val1 = calcStepUp(sip1, 10, 16, 15);
+  let val2 = calcStepUp(sip2, 10, 14, 15);
+  let val3 = calcStepUp(sip3, 10, 15, 15);
+  let totalVal = val1 + val2 + val3;
+
+  const fmt = (v) => 'Rs.\n' + Math.round(v).toLocaleString('en-IN');
+  const fmtInline = (v) => 'Rs. ' + Math.round(v).toLocaleString('en-IN');
+
   autoTable(doc, {
     startY: yPos,
     head: [['#', 'Category', 'Risk\nLevel', 'Monthly\nSIP', 'Step-\nUp', 'Step-\nUp %', 'Expected\nReturn', 'Goal\n#', 'Years', 'Projected Value']],
     body: [
-      ['1', 'Flexi Cap', 'High', 'Rs.\n30,000', 'Yes', '10%\np.a.', '16% p.a.', '1', '15', 'Rs. 3,31,15,564'],
-      ['2', 'Large &\nMid Cap', 'Med–\nHigh', 'Rs.\n22,500', 'Yes', '10%\np.a.', '14% p.a.', '1', '15', 'Rs. 2,14,69,830'],
-      ['3', 'Small\nCap', 'High', 'Rs.\n22,500', 'Yes', '10%\np.a.', '15% p.a.', '1', '15', 'Rs. 2,30,83,276']
+      ['1', 'Flexi Cap', 'High', fmt(sip1), 'Yes', '10%\np.a.', '16% p.a.', '1', '15', fmtInline(val1)],
+      ['2', 'Large &\nMid Cap', 'Med–\nHigh', fmt(sip2), 'Yes', '10%\np.a.', '14% p.a.', '1', '15', fmtInline(val2)],
+      ['3', 'Small\nCap', 'High', fmt(sip3), 'Yes', '10%\np.a.', '15% p.a.', '1', '15', fmtInline(val3)]
     ],
-    foot: [['TOTAL MONTHLY SIP OUTFLOW', '', '', formData.sipTotal || 'Rs.\n75,000', 'TOTAL SIP PROJECTED CORPUS', '', '', '', '', 'Rs.\n7,76,68,670']],
+    foot: [['TOTAL MONTHLY SIP OUTFLOW', '', '', fmt(sipTotalVal), 'TOTAL SIP PROJECTED CORPUS', '', '', '', '', fmt(totalVal)]],
     theme: 'grid',
     headStyles: { fillColor: primaryColor, textColor: 255, fontStyle: 'bold', halign: 'center', valign: 'middle', fontSize: 8 },
     bodyStyles: { textColor: textColor, halign: 'center', valign: 'middle', fontSize: 8 },
@@ -674,10 +707,14 @@ export const generateCorporateReport = async (formData, userName) => {
   const chartH = 65;
 
   // Calculate dynamic values based on input
-  let rawLump = String(formData.lumpsumTotal || '500000').replace(/[^0-9.]/g, '');
-  let initialInvested = parseFloat(rawLump) || 500000;
-  let initialLakhs = initialInvested / 100000;
-  let projectedLakhs = initialLakhs * Math.pow(1.15, 15); // 15 years at 15%
+  let rawLump = String(formData.annualInvestment || formData.lumpsumTotal || '500000').replace(/[^0-9.]/g, '');
+  let annualInvested = parseFloat(rawLump) || 500000;
+  let annualLakhs = annualInvested / 100000;
+  
+  let projectedLakhs = 0;
+  for(let y=1; y<=15; y++) {
+    projectedLakhs += annualLakhs * Math.pow(1.15, 15 - y + 1); // 15 years at 15%
+  }
 
   // Determine dynamic Y-axis maximum
   let maxY = Math.ceil(projectedLakhs / 10) * 10;
@@ -712,25 +749,39 @@ export const generateCorporateReport = async (formData, userName) => {
   doc.text('Years', chartX + chartW/2, chartY + chartH + 10, { align: 'center' });
 
   // Draw Lines
-  // 1. Invested Line (Flat at initial amount)
+  // 1. Invested Line (Linear growth since it's an annual investment)
   doc.setDrawColor(218, 165, 32); // Gold
   doc.setLineWidth(0.8);
   doc.setLineDash([2, 2], 0);
-  let investedY = chartY + chartH - (initialLakhs * chartH / maxY);
-  // Ensure it doesn't drop below the chart (though it shouldn't mathematically)
-  investedY = Math.min(investedY, chartY + chartH); 
-  doc.line(chartX, investedY, chartX + chartW, investedY);
+  let prevInvX = chartX;
+  let prevInvY = chartY + chartH - (annualLakhs * chartH / maxY);
+  prevInvY = Math.min(prevInvY, chartY + chartH); 
+  
+  for(let i=1; i<=14; i++) {
+    const currX = chartX + (i * chartW / 14);
+    const currInv = annualLakhs * (i + 1);
+    let currInvY = chartY + chartH - (currInv * chartH / maxY);
+    currInvY = Math.min(currInvY, chartY + chartH);
+    if(currInvY >= chartY) {
+      doc.line(prevInvX, prevInvY, currX, currInvY);
+    }
+    prevInvX = currX;
+    prevInvY = currInvY;
+  }
   doc.setLineDash([], 0);
 
   // 2. Projected Line (Curve from initial to projected)
   doc.setDrawColor(...primaryColor); // Dark Blue
   doc.setLineWidth(1.2);
   let prevX = chartX;
-  let prevY = investedY;
+  let prevY = chartY + chartH - (annualLakhs * Math.pow(1.15, 1) * chartH / maxY);
   for(let i=1; i<=14; i++) {
     const currX = chartX + (i * chartW / 14);
-    // Compound growth simulation: initial * (1.15)^i
-    const val = initialLakhs * Math.pow(1.15, i);
+    // Compound growth simulation for annual investments
+    let val = 0;
+    for(let y=1; y<=i+1; y++) {
+      val += annualLakhs * Math.pow(1.15, (i+1) - y + 1);
+    }
     const currY = chartY + chartH - (val * chartH / maxY);
     if(currY >= chartY) { // Keep inside chart bounds
       doc.line(prevX, prevY, currX, currY);
@@ -860,7 +911,7 @@ export const generateCorporateReport = async (formData, userName) => {
   doc.setTextColor(...accentGold);
   doc.setFontSize(9);
   doc.setFont('helvetica', 'italic');
-  doc.text('AMFI Registered Investment Advisory Firm', pageWidth/2, yPos + 13, { align: 'center' });
+  doc.text('AMFI Registered Investment Distributor', pageWidth/2, yPos + 13, { align: 'center' });
   
   doc.setTextColor(200, 200, 200);
   doc.setFont('helvetica', 'normal');

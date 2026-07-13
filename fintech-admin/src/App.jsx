@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
 import TestimonialsManager from './pages/TestimonialsManager';
+import UsersManager from './pages/UsersManager';
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
         <Route path="/" element={<Layout />}>
           {/* Default route is now the Testimonials manager */}
           <Route index element={<TestimonialsManager />} />
+          <Route path="users" element={<UsersManager />} />
         </Route>
       </Routes>
     </Router>

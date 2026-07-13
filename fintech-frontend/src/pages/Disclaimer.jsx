@@ -211,15 +211,13 @@ const Disclaimer = () => {
               <div className="disclaimer-item"><span className="item-icon">📊</span><span>Market Risk</span></div>
               <div className="disclaimer-item"><span className="item-icon">✓</span><span>AMFI Registered</span></div>
               <div className="disclaimer-item"><span className="item-icon">🛡️</span><span>SEBI Compliant</span></div>
-              <div className="disclaimer-item"><span className="item-icon">📋</span><span>IRDA Regulated</span></div>
             </div>
             <div className="disclaimer-text">
               <p>
                 <strong>Investerly is an AMFI Registered Mutual Fund Distributor.</strong> Mutual fund
                 investments are subject to market risks. Please read all scheme related documents carefully
-                before investing. Insurance is subject to policy terms and conditions. Investments in
-                securities markets are subject to market risks — read all related documents carefully
-                before investing.
+                before investing. Investments in securities markets are subject to market risks — read all 
+                related documents carefully before investing.
               </p>
             </div>
           </div>
