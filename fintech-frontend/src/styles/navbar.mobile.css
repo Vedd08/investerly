@@ -53,16 +53,24 @@
   .mobile-navbar .navbar-brand {
     display: flex;
     align-items: center;
+    gap: 4px;
     text-decoration: none;
     flex-shrink: 0;
   }
 
   /* The logo shown in the top bar */
   .mobile-navbar .navbar-logo {
-    height: 72px;        /* visible and prominent */
     width: auto;
     object-fit: contain;
     display: block;
+  }
+
+  .mobile-navbar .logo1 {
+    height: 48px;
+  }
+
+  .mobile-navbar .logo2 {
+    height: 120px;
   }
 
   /* ── Hamburger toggle ── */

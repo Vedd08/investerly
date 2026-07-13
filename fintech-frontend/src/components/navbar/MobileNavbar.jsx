@@ -7,7 +7,8 @@ import {
 } from "lucide-react";
 import "../../styles/navbar.mobile.css";
 import { AuthContext } from "../../context/AuthContext";
-import logo from "../../assets/investerly_logo3-removebg-preview.png";
+import logo1 from "../../assets/investerly_logo1-removebg-preview (1).svg";
+import logo2 from "../../assets/investerly_logo3-removebg-preview.svg";
 
 const MobileNavbar = ({ scrolled }) => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -77,7 +78,16 @@ const MobileNavbar = ({ scrolled }) => {
     <header className="navbar mobile-navbar" ref={navRef}>
       <div className="container navbar-inner">
         <Link to="/" className="navbar-brand" onClick={closeMenu}>
-          <img src={logo} alt="Investerly" className="navbar-logo" />
+          <img 
+            src={logo1} 
+            alt="Investerly Logo 1" 
+            className="navbar-logo logo1"
+          />
+          <img 
+            src={logo2} 
+            alt="Investerly Logo 2" 
+            className="navbar-logo logo2"
+          />
         </Link>
 
         <button
@@ -106,7 +116,10 @@ const MobileNavbar = ({ scrolled }) => {
       >
         <div className="mobile-menu-header">
           <div className="mobile-brand">
-            <img src={logo} alt="Investerly" className="mobile-menu-logo" />
+            <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
+              <img src={logo1} alt="Investerly" className="mobile-menu-logo" style={{ height: '58px' }} />
+              <img src={logo2} alt="Investerly" className="mobile-menu-logo" style={{ height: '120px' }} />
+            </div>
             <div className="mobile-brand-text">
               <span className="brand-text">INVESTERLY</span>
               <span className="brand-subtitle">Financial Advisory</span>
