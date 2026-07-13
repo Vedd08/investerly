@@ -261,3 +261,76 @@
     max-width: 450px;
   }
 }
+/* Dual Login Selection Cards */
+.login-selection-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.login-card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-align: left;
+  width: 100%;
+}
+
+.login-card:hover {
+  border-color: #2FB34A;
+  box-shadow: 0 10px 25px -5px rgba(47, 179, 74, 0.15), 0 8px 10px -6px rgba(47, 179, 74, 0.1);
+  transform: translateY(-2px);
+}
+
+.login-card-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  background: #f0fdf4;
+  color: #2FB34A;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.login-card-content h3 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 0.25rem 0;
+}
+
+.login-card-content p {
+  font-size: 0.9rem;
+  color: #6b7280;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.back-to-options {
+  background: none;
+  border: none;
+  color: #6b7280;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 2rem;
+  transition: color 0.2s;
+}
+
+.back-to-options:hover {
+  color: #111827;
+}
+
