@@ -96,6 +96,19 @@ app.use('/legacy-assets', createProxyMiddleware({
   }
 }));
 
+// Catch-all proxy for the portal subdomain
+app.use('/legacy-proxy', createProxyMiddleware({
+  target: 'https://137.59.55.62',
+  changeOrigin: true,
+  secure: false,
+  pathRewrite: {
+    '^/legacy-proxy': '/'
+  },
+  onProxyReq: (proxyReq) => {
+    proxyReq.setHeader('Host', 'investerly.in');
+  }
+}));
+
 app.use("/api/contact", contactRoutes);
 app.use("/api/partner", partnerRoutes);
 app.use("/api/auth", authRoutes);

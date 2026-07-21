@@ -1,6 +1,16 @@
 {
   "rewrites": [
     {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "portal.investerly.in"
+        }
+      ],
+      "destination": "https://investerly.onrender.com/legacy-proxy/$1"
+    },
+    {
       "source": "/login.php",
       "destination": "https://investerly.onrender.com/legacy-login"
     },
