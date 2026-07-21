@@ -68,13 +68,15 @@ app.use(express.json({ limit: '10mb' }));
 
 // Health check
 app.get("/", (req, res, next) => {
-  if (req.hostname === 'portal.investerly.in') return next();
+  const host = req.headers['x-forwarded-host'] || req.hostname;
+  if (host === 'portal.investerly.in') return next();
   res.json({ status: "Backend running" });
 });
 
 // Direct proxy for the portal subdomain
 app.use((req, res, next) => {
-  if (req.hostname === 'portal.investerly.in') {
+  const host = req.headers['x-forwarded-host'] || req.hostname;
+  if (host === 'portal.investerly.in') {
     return createProxyMiddleware({
       target: 'https://137.59.55.62',
       changeOrigin: true,
