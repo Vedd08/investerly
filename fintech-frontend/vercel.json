@@ -1,14 +1,14 @@
 {
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/:path*",
       "has": [
         {
           "type": "host",
           "value": "portal.investerly.in"
         }
       ],
-      "destination": "https://investerly.onrender.com/$1"
+      "destination": "https://investerly.onrender.com/:path*"
     },
     {
       "source": "/login.php",
