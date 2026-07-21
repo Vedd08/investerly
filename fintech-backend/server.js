@@ -5,7 +5,12 @@ const rateLimit = require("express-rate-limit");
 const morgan = require("morgan");
 require("dotenv").config();
 const { createProxyMiddleware } = require('http-proxy-middleware');
+const https = require('https');
 
+const legacyAgent = new https.Agent({
+  rejectUnauthorized: false,
+  servername: 'investerly.in'
+});
 const connectDB = require("./config/db");
 const sendEmail = require("./utils/sendEmail");
 const contactRoutes = require("./routes/contact.routes");
@@ -82,6 +87,7 @@ app.use((req, res, next) => {
   if (host === 'portal.investerly.in') {
     return createProxyMiddleware({
       target: 'https://137.59.55.62',
+      agent: legacyAgent,
       changeOrigin: true,
       secure: false,
       hostRewrite: 'portal.investerly.in',
@@ -97,6 +103,7 @@ app.use((req, res, next) => {
 // Proxy the legacy login page
 app.use('/legacy-login', createProxyMiddleware({
   target: 'https://137.59.55.62', // Old server IP
+  agent: legacyAgent,
   changeOrigin: true,
   secure: false, // Ignores SSL certificate errors for the IP
   pathRewrite: { '^/legacy-login': '/login.php' },
@@ -108,6 +115,7 @@ app.use('/legacy-login', createProxyMiddleware({
 // Proxy the legacy assets
 app.use('/legacy-assets', createProxyMiddleware({
   target: 'https://137.59.55.62',
+  agent: legacyAgent,
   changeOrigin: true,
   secure: false,
   autoRewrite: true,
