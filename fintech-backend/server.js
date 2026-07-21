@@ -4,6 +4,7 @@ const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
 const morgan = require("morgan");
 require("dotenv").config();
+const { createProxyMiddleware } = require('http-proxy-middleware');
 
 const connectDB = require("./config/db");
 const sendEmail = require("./utils/sendEmail");
@@ -69,6 +70,31 @@ app.use(express.json({ limit: '10mb' }));
 app.get("/", (req, res) => {
   res.json({ status: "Backend running" });
 });
+
+// Proxy the legacy login page
+app.use('/legacy-login', createProxyMiddleware({
+  target: 'https://137.59.55.62', // Old server IP
+  changeOrigin: true,
+  secure: false, // Ignores SSL certificate errors for the IP
+  pathRewrite: { '^/legacy-login': '/login.php' },
+  onProxyReq: (proxyReq) => {
+    proxyReq.setHeader('Host', 'investerly.in'); // Fool the old server
+  }
+}));
+
+// Proxy the legacy assets
+app.use('/legacy-assets', createProxyMiddleware({
+  target: 'https://137.59.55.62',
+  changeOrigin: true,
+  secure: false,
+  pathRewrite: {
+    '^/legacy-assets/css\\?family=Lato': '/css?family=Lato',
+    '^/legacy-assets': '/'
+  },
+  onProxyReq: (proxyReq) => {
+    proxyReq.setHeader('Host', 'investerly.in');
+  }
+}));
 
 app.use("/api/contact", contactRoutes);
 app.use("/api/partner", partnerRoutes);

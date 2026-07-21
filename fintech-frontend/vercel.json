@@ -1,6 +1,94 @@
 {
   "rewrites": [
     {
+      "source": "/login.php",
+      "destination": "https://investerly.onrender.com/legacy-login"
+    },
+    {
+      "source": "/captcha_code.php",
+      "destination": "https://investerly.onrender.com/legacy-assets/captcha_code.php"
+    },
+    {
+      "source": "/animations.css",
+      "destination": "https://investerly.onrender.com/legacy-assets/animations.css"
+    },
+    {
+      "source": "/fontawesome-all.min.css",
+      "destination": "https://investerly.onrender.com/legacy-assets/fontawesome-all.min.css"
+    },
+    {
+      "source": "/jquery-ui.css",
+      "destination": "https://investerly.onrender.com/legacy-assets/jquery-ui.css"
+    },
+    {
+      "source": "/owl.carousel.min.css",
+      "destination": "https://investerly.onrender.com/legacy-assets/owl.carousel.min.css"
+    },
+    {
+      "source": "/owl.theme.default.min.css",
+      "destination": "https://investerly.onrender.com/legacy-assets/owl.theme.default.min.css"
+    },
+    {
+      "source": "/style.css",
+      "destination": "https://investerly.onrender.com/legacy-assets/style.css"
+    },
+    {
+      "source": "/jquery.min.js",
+      "destination": "https://investerly.onrender.com/legacy-assets/jquery.min.js"
+    },
+    {
+      "source": "/popper.min.js",
+      "destination": "https://investerly.onrender.com/legacy-assets/popper.min.js"
+    },
+    {
+      "source": "/bootstrap.min.js",
+      "destination": "https://investerly.onrender.com/legacy-assets/bootstrap.min.js"
+    },
+    {
+      "source": "/aes.js",
+      "destination": "https://investerly.onrender.com/legacy-assets/aes.js"
+    },
+    {
+      "source": "/login_script.js",
+      "destination": "https://investerly.onrender.com/legacy-assets/login_script.js"
+    },
+    {
+      "source": "/formValidation.js",
+      "destination": "https://investerly.onrender.com/legacy-assets/formValidation.js"
+    },
+    {
+      "source": "/ajaxCore.js",
+      "destination": "https://investerly.onrender.com/legacy-assets/ajaxCore.js"
+    },
+    {
+      "source": "/login.js",
+      "destination": "https://investerly.onrender.com/legacy-assets/login.js"
+    },
+    {
+      "source": "/logo.png",
+      "destination": "https://investerly.onrender.com/legacy-assets/logo.png"
+    },
+    {
+      "source": "/amfi.png",
+      "destination": "https://investerly.onrender.com/legacy-assets/amfi.png"
+    },
+    {
+      "source": "/mutualfund.png",
+      "destination": "https://investerly.onrender.com/legacy-assets/mutualfund.png"
+    },
+    {
+      "source": "/chart-loader.js",
+      "destination": "https://investerly.onrender.com/legacy-assets/chart-loader.js"
+    },
+    {
+      "source": "/customscript.js",
+      "destination": "https://investerly.onrender.com/legacy-assets/customscript.js"
+    },
+    {
+      "source": "/css",
+      "destination": "https://investerly.onrender.com/legacy-assets/css"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
