@@ -24,7 +24,10 @@ app.set('trust proxy', 1);
 connectDB();
 
 // Security Middleware
-app.use(helmet());
+app.use(helmet({
+  contentSecurityPolicy: false,
+  crossOriginEmbedderPolicy: false
+}));
 
 // Logging Middleware
 if (process.env.NODE_ENV !== 'production') {
