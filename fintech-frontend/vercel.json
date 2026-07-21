@@ -8,7 +8,7 @@
           "value": "portal.investerly.in"
         }
       ],
-      "destination": "https://investerly.onrender.com/legacy-proxy/$1"
+      "destination": "https://investerly.onrender.com/$1"
     },
     {
       "source": "/login.php",
