@@ -5,7 +5,7 @@
       "has": [
         {
           "type": "host",
-          "value": "login.investerly.in"
+          "value": "portal.investerly.in"
         }
       ],
       "destination": "https://investerly.onrender.com/legacy-proxy/$1"
