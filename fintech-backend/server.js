@@ -103,7 +103,7 @@ app.use('/legacy-proxy', createProxyMiddleware({
   target: 'https://137.59.55.62',
   changeOrigin: true,
   secure: false,
-  autoRewrite: true,
+  hostRewrite: 'portal.investerly.in',
   protocolRewrite: 'https',
   pathRewrite: {
     '^/legacy-proxy': '/'
