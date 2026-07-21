@@ -87,6 +87,8 @@ app.use('/legacy-assets', createProxyMiddleware({
   target: 'https://137.59.55.62',
   changeOrigin: true,
   secure: false,
+  autoRewrite: true,
+  protocolRewrite: 'https',
   pathRewrite: {
     '^/legacy-assets/css\\?family=Lato': '/css?family=Lato',
     '^/legacy-assets': '/'
@@ -101,6 +103,8 @@ app.use('/legacy-proxy', createProxyMiddleware({
   target: 'https://137.59.55.62',
   changeOrigin: true,
   secure: false,
+  autoRewrite: true,
+  protocolRewrite: 'https',
   pathRewrite: {
     '^/legacy-proxy': '/'
   },
