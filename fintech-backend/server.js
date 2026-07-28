@@ -46,6 +46,8 @@ const allowedOrigins = [
   'http://127.0.0.1:5173',
   'http://127.0.0.1:5174',
   'https://investerly.vercel.app', // Explicit production URL
+  'https://investerly.in', // Custom domain
+  'https://www.investerly.in', // Custom domain with www
   process.env.FRONTEND_URL // Additional dynamic production URL
 ].filter(Boolean);
 
