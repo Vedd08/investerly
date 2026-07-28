@@ -59,6 +59,11 @@ const Login = () => {
       
       setIsSubmitting(false);
       
+      // If the API explicitly returns a false status inside a 200 OK response
+      if (res.data && res.data.status === false) {
+         return setError(res.data.msg || res.data.errorMsg || 'Login failed');
+      }
+
       // If the API gives a redirect link, follow it. Otherwise log the success.
       if (res.data && (res.data.redirectUrl || res.data.url || res.data.callbackUrl)) {
          window.location.href = res.data.redirectUrl || res.data.url || res.data.callbackUrl;
