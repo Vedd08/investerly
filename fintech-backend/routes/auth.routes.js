@@ -130,8 +130,8 @@ router.post('/redvision-login', async (req, res) => {
         password,
         loginFor, // e.g., "client", "employee", "admin"
         domain: siteDomain,
-        callbackUrl: `https://${siteDomain}/dashboard`, 
-        siteUrl: `https://${siteDomain}`,
+        callbackUrl: `https://${siteDomain}`, 
+        siteUrl: `https://wealthelite.in/`,
         apiKey: process.env.REDVISION_API_KEY
       })
     });
