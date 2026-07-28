@@ -251,7 +251,7 @@ const Login = () => {
             </button>
             
             <form onSubmit={handleRedvisionSubmit} className="auth-form">
-              <div className="role-selection" style={{ display: 'flex', gap: '15px', marginBottom: '20px', borderBottom: '2px solid #45a8de', paddingBottom: '15px' }}>
+              <div className="role-selection" style={{ display: 'flex', flexWrap: 'wrap', gap: '15px', marginBottom: '20px', borderBottom: '2px solid #45a8de', paddingBottom: '15px' }}>
                 <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', gap: '5px' }}>
                   <input type="radio" name="rvRole" value="client" checked={rvRole === 'client'} onChange={(e) => setRvRole(e.target.value)} />
                   Client
@@ -263,6 +263,18 @@ const Login = () => {
                 <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', gap: '5px' }}>
                   <input type="radio" name="rvRole" value="admin" checked={rvRole === 'admin'} onChange={(e) => setRvRole(e.target.value)} />
                   Admin
+                </label>
+                <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', gap: '5px' }}>
+                  <input type="radio" name="rvRole" value="advisors" checked={rvRole === 'advisors'} onChange={(e) => setRvRole(e.target.value)} />
+                  Advisors
+                </label>
+                <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', gap: '5px' }}>
+                  <input type="radio" name="rvRole" value="branch" checked={rvRole === 'branch'} onChange={(e) => setRvRole(e.target.value)} />
+                  Branch
+                </label>
+                <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', gap: '5px' }}>
+                  <input type="radio" name="rvRole" value="rm" checked={rvRole === 'rm'} onChange={(e) => setRvRole(e.target.value)} />
+                  RM
                 </label>
               </div>
 
@@ -309,7 +321,7 @@ const Login = () => {
               <h3 style={{ marginBottom: '15px' }}>Reset Password</h3>
               <p style={{ fontSize: '14px', color: '#666', marginBottom: '20px' }}>Enter your username and role to receive an OTP.</p>
 
-              <div className="role-selection" style={{ display: 'flex', gap: '15px', marginBottom: '20px', borderBottom: '2px solid #45a8de', paddingBottom: '15px' }}>
+              <div className="role-selection" style={{ display: 'flex', flexWrap: 'wrap', gap: '15px', marginBottom: '20px', borderBottom: '2px solid #45a8de', paddingBottom: '15px' }}>
                 <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', gap: '5px' }}>
                   <input type="radio" name="forgotRole" value="client" checked={forgotRole === 'client'} onChange={(e) => setForgotRole(e.target.value)} />
                   Client
@@ -321,6 +333,18 @@ const Login = () => {
                 <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', gap: '5px' }}>
                   <input type="radio" name="forgotRole" value="admin" checked={forgotRole === 'admin'} onChange={(e) => setForgotRole(e.target.value)} />
                   Admin
+                </label>
+                <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', gap: '5px' }}>
+                  <input type="radio" name="forgotRole" value="advisors" checked={forgotRole === 'advisors'} onChange={(e) => setForgotRole(e.target.value)} />
+                  Advisors
+                </label>
+                <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', gap: '5px' }}>
+                  <input type="radio" name="forgotRole" value="branch" checked={forgotRole === 'branch'} onChange={(e) => setForgotRole(e.target.value)} />
+                  Branch
+                </label>
+                <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', gap: '5px' }}>
+                  <input type="radio" name="forgotRole" value="rm" checked={forgotRole === 'rm'} onChange={(e) => setForgotRole(e.target.value)} />
+                  RM
                 </label>
               </div>
 
