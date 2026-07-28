@@ -68,7 +68,9 @@ const Login = () => {
       }
     } catch (err) {
       setIsSubmitting(false);
-      setError(err.response?.data?.message || err.response?.data || 'Login failed');
+      const data = err.response?.data;
+      const errorMsg = data?.message || data?.error || data?.msg || (typeof data === 'string' ? data : 'Login failed');
+      setError(errorMsg);
       console.error(err);
     }
   };

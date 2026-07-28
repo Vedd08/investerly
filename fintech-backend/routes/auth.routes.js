@@ -114,10 +114,10 @@ router.get('/me', protect, async (req, res) => {
 // @access  Public
 router.post('/redvision-login', async (req, res) => {
   try {
-    const { username, password, loginFor, domain } = req.body;
+    const { username, password, loginFor } = req.body;
     
-    // Fallback domain if not provided
-    const siteDomain = domain || process.env.FRONTEND_URL || "investerly.in";
+    // Redvision strictly requires the authorized domain for the API Key
+    const siteDomain = "investerly.in";
     
     // Ensure Node fetch is available (Node 18+)
     const response = await fetch("https://redvisionassets.com/api/external-apis/login/ifa-login", {
