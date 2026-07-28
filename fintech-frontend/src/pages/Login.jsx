@@ -101,7 +101,11 @@ const Login = () => {
       setIsSubmitting(false);
       
       if (res.data && res.data.msgType === 'error') {
-         return setError(res.data.msg || 'Failed to send OTP');
+         let errorMsg = res.data.msg || 'Failed to send OTP';
+         if (errorMsg === 'Invalid Desk') {
+            errorMsg = 'Username not found or invalid role for this desk.';
+         }
+         return setError(errorMsg);
       }
       
       // Success, move to step 2
@@ -109,7 +113,11 @@ const Login = () => {
     } catch (err) {
       setIsSubmitting(false);
       const data = err.response?.data;
-      setError(data?.message || data?.error || data?.msg || (typeof data === 'string' ? data : 'Failed to send OTP'));
+      let errorMsg = data?.message || data?.error || data?.msg || (typeof data === 'string' ? data : 'Failed to send OTP');
+      if (errorMsg === 'Invalid Desk') {
+         errorMsg = 'Username not found or invalid role for this desk.';
+      }
+      setError(errorMsg);
     }
   };
 
