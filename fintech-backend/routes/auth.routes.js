@@ -117,7 +117,7 @@ router.post('/redvision-login', async (req, res) => {
     const { username, password, loginFor } = req.body;
     
     // Redvision strictly requires the authorized domain for the API Key
-    const siteDomain = "portal.investerly.in";
+    const siteDomain = "investerly.in";
     
     // Ensure Node fetch is available (Node 18+)
     const response = await fetch("https://redvisionassets.com/api/external-apis/login/ifa-login", {
@@ -161,7 +161,7 @@ router.post('/redvision-login', async (req, res) => {
 router.post('/redvision-forgot-password-send', async (req, res) => {
   try {
     const { username, type } = req.body;
-    const siteDomain = "portal.investerly.in";
+    const siteDomain = "investerly.in";
     
     const response = await fetch("https://redvisionassets.com/api/external-apis/login/forget-password", {
       method: "POST",
@@ -200,7 +200,7 @@ router.post('/redvision-forgot-password-send', async (req, res) => {
 router.post('/redvision-forgot-password-submit', async (req, res) => {
   try {
     const { OtpMobileNo, mobileOtp } = req.body;
-    const siteDomain = "portal.investerly.in";
+    const siteDomain = "investerly.in";
     
     const response = await fetch("https://redvisionassets.com/api/external-apis/login/submit-forget-password", {
       method: "POST",
