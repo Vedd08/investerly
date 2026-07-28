@@ -44,6 +44,9 @@ export const AuthProvider = ({ children }) => {
         return { success: false, message: data.message };
       }
     } catch (error) {
+      if (error.response && error.response.data) {
+        return { success: false, message: error.response.data.message || 'Login failed' };
+      }
       return { success: false, message: 'Server connection failed. Is the backend running?' };
     }
   };
@@ -61,6 +64,9 @@ export const AuthProvider = ({ children }) => {
         return { success: false, message: data.message };
       }
     } catch (error) {
+      if (error.response && error.response.data) {
+        return { success: false, message: error.response.data.message || 'Registration failed' };
+      }
       return { success: false, message: 'Server connection failed. Is the backend running?' };
     }
   };
