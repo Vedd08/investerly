@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { AlertCircle, Loader2, UserCircle, Briefcase, ArrowLeft } from 'lucide-react';
+import api from '../utils/api';
 import logo1 from '../assets/investerly_logo1-removebg-preview (1).svg';
 import logo2 from '../assets/investerly_logo3-removebg-preview.svg';
 import '../styles/login.css';
@@ -11,7 +12,12 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [loginStep, setLoginStep] = useState('select'); // 'select' or 'form'
+  const [loginStep, setLoginStep] = useState('select'); // 'select', 'form', or 'redvision'
+  
+  // Redvision specific state
+  const [rvUsername, setRvUsername] = useState('');
+  const [rvPassword, setRvPassword] = useState('');
+  const [rvRole, setRvRole] = useState('client');
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -31,6 +37,39 @@ const Login = () => {
       navigate('/welcome');
     } else {
       setError(res.message || 'Login failed');
+    }
+  };
+
+  const handleRedvisionSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    
+    if (!rvUsername || !rvPassword) {
+      return setError('Please fill in all fields');
+    }
+
+    setIsSubmitting(true);
+    try {
+      const res = await api.post('/auth/redvision-login', {
+        username: rvUsername,
+        password: rvPassword,
+        loginFor: rvRole,
+        domain: window.location.hostname
+      });
+      
+      setIsSubmitting(false);
+      
+      // If the API gives a redirect link, follow it. Otherwise log the success.
+      if (res.data && (res.data.redirectUrl || res.data.url || res.data.callbackUrl)) {
+         window.location.href = res.data.redirectUrl || res.data.url || res.data.callbackUrl;
+      } else {
+         setError('Login successful, but redirect URL not found in response. Check console.');
+         console.log('Redvision Response:', res.data);
+      }
+    } catch (err) {
+      setIsSubmitting(false);
+      setError(err.response?.data?.message || err.response?.data || 'Login failed');
+      console.error(err);
     }
   };
 
@@ -60,7 +99,7 @@ const Login = () => {
           <div className="login-selection-container">
             <div 
               className="login-card" 
-              onClick={() => window.location.href = 'https://portal.investerly.in/login.php'}
+              onClick={() => setLoginStep('redvision')}
             >
               <div className="login-card-icon">
                 <UserCircle size={28} />
@@ -88,7 +127,7 @@ const Login = () => {
               <p>Don't have an account? <Link to="/register" className="auth-link">Create one</Link></p>
             </div>
           </div>
-        ) : (
+        ) : loginStep === 'form' ? (
           <>
             <button type="button" className="back-to-options" onClick={() => setLoginStep('select')}>
               <ArrowLeft size={16} /> Back to options
@@ -128,7 +167,62 @@ const Login = () => {
               <p>Don't have an account? <Link to="/register" className="auth-link">Create one</Link></p>
             </div>
           </>
-        )}
+        ) : loginStep === 'redvision' ? (
+          <>
+            <button type="button" className="back-to-options" onClick={() => setLoginStep('select')}>
+              <ArrowLeft size={16} /> Back to options
+            </button>
+            
+            <form onSubmit={handleRedvisionSubmit} className="auth-form">
+              <div className="role-selection" style={{ display: 'flex', gap: '15px', marginBottom: '20px', borderBottom: '2px solid #45a8de', paddingBottom: '15px' }}>
+                <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', gap: '5px' }}>
+                  <input type="radio" name="rvRole" value="client" checked={rvRole === 'client'} onChange={(e) => setRvRole(e.target.value)} />
+                  Client
+                </label>
+                <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', gap: '5px' }}>
+                  <input type="radio" name="rvRole" value="employee" checked={rvRole === 'employee'} onChange={(e) => setRvRole(e.target.value)} />
+                  Employee
+                </label>
+                <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', gap: '5px' }}>
+                  <input type="radio" name="rvRole" value="admin" checked={rvRole === 'admin'} onChange={(e) => setRvRole(e.target.value)} />
+                  Admin
+                </label>
+              </div>
+
+              <div className="input-group-premium">
+                <label>Username</label>
+                <input 
+                  type="text" 
+                  className="input-premium"
+                  value={rvUsername}
+                  onChange={(e) => setRvUsername(e.target.value)}
+                  placeholder="Enter your Username"
+                  required
+                />
+              </div>
+              
+              <div className="input-group-premium">
+                <label>Password</label>
+                <input 
+                  type="password" 
+                  className="input-premium"
+                  value={rvPassword}
+                  onChange={(e) => setRvPassword(e.target.value)}
+                  placeholder="••••••••"
+                  required
+                />
+              </div>
+              
+              <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '20px' }}>
+                <span style={{ fontSize: '14px', color: '#888', cursor: 'pointer' }}>Forgot Password?</span>
+              </div>
+
+              <button type="submit" className="btn-premium" disabled={isSubmitting}>
+                {isSubmitting ? <Loader2 className="spinner" size={20} /> : "Login"}
+              </button>
+            </form>
+          </>
+        ) : null}
       </div>
 
       {/* RIGHT SIDE - VISUAL */}

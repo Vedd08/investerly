@@ -109,4 +109,50 @@ router.get('/me', protect, async (req, res) => {
   });
 });
 
+// @desc    Redvision API Login Proxy
+// @route   POST /api/auth/redvision-login
+// @access  Public
+router.post('/redvision-login', async (req, res) => {
+  try {
+    const { username, password, loginFor, domain } = req.body;
+    
+    // Fallback domain if not provided
+    const siteDomain = domain || process.env.FRONTEND_URL || "investerly.in";
+    
+    // Ensure Node fetch is available (Node 18+)
+    const response = await fetch("https://redvisionassets.com/api/external-apis/login/ifa-login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        username,
+        password,
+        loginFor, // e.g., "client", "employee", "admin"
+        domain: siteDomain,
+        callbackUrl: `https://${siteDomain}/dashboard`, 
+        siteUrl: `https://${siteDomain}`,
+        apiKey: process.env.REDVISION_API_KEY
+      })
+    });
+    
+    let data;
+    try {
+      data = await response.json();
+    } catch (parseError) {
+      // In case the API returns non-JSON like HTML or empty body
+      return res.status(response.status).send(await response.text());
+    }
+    
+    if (response.ok) {
+      res.status(200).json(data);
+    } else {
+      res.status(response.status).json(data);
+    }
+  } catch (error) {
+    console.error("Redvision login error:", error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
 module.exports = router;
