@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
-import { AlertCircle, Loader2, UserCircle, Briefcase, ArrowLeft } from 'lucide-react';
+import { AlertCircle, Loader2, UserCircle, Briefcase, ArrowLeft, Eye, EyeOff } from 'lucide-react';
 import api from '../utils/api';
 import logo1 from '../assets/investerly_logo1-removebg-preview (1).svg';
 import logo2 from '../assets/investerly_logo3-removebg-preview.svg';
@@ -13,11 +13,13 @@ const Login = () => {
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [loginStep, setLoginStep] = useState('select'); // 'select', 'form', or 'redvision'
+  const [showPassword, setShowPassword] = useState(false);
   
   // Redvision specific state
   const [rvUsername, setRvUsername] = useState('');
   const [rvPassword, setRvPassword] = useState('');
   const [rvRole, setRvRole] = useState('client');
+  const [showRvPassword, setShowRvPassword] = useState(false);
   
   // Forgot Password specific state
   const [forgotUsername, setForgotUsername] = useState('');
@@ -225,14 +227,24 @@ const Login = () => {
               
               <div className="input-group-premium">
                 <label>Password</label>
-                <input 
-                  type="password" 
-                  className="input-premium"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="••••••••"
-                  required
-                />
+                <div style={{ position: 'relative' }}>
+                  <input 
+                    type={showPassword ? "text" : "password"}
+                    className="input-premium"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="••••••••"
+                    required
+                    style={{ paddingRight: '40px' }}
+                  />
+                  <button 
+                    type="button" 
+                    onClick={() => setShowPassword(!showPassword)}
+                    style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', color: '#666', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                  >
+                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
+                </div>
               </div>
               
               <button type="submit" className="btn-premium" disabled={isSubmitting}>
@@ -292,14 +304,24 @@ const Login = () => {
               
               <div className="input-group-premium">
                 <label>Password</label>
-                <input 
-                  type="password" 
-                  className="input-premium"
-                  value={rvPassword}
-                  onChange={(e) => setRvPassword(e.target.value)}
-                  placeholder="••••••••"
-                  required
-                />
+                <div style={{ position: 'relative' }}>
+                  <input 
+                    type={showRvPassword ? "text" : "password"} 
+                    className="input-premium"
+                    value={rvPassword}
+                    onChange={(e) => setRvPassword(e.target.value)}
+                    placeholder="••••••••"
+                    required
+                    style={{ paddingRight: '40px' }}
+                  />
+                  <button 
+                    type="button" 
+                    onClick={() => setShowRvPassword(!showRvPassword)}
+                    style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', color: '#666', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                  >
+                    {showRvPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
+                </div>
               </div>
               
               <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '20px' }}>
