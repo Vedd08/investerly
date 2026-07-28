@@ -155,4 +155,82 @@ router.post('/redvision-login', async (req, res) => {
   }
 });
 
+// @desc    Redvision API Forgot Password - Send OTP
+// @route   POST /api/auth/redvision-forgot-password-send
+// @access  Public
+router.post('/redvision-forgot-password-send', async (req, res) => {
+  try {
+    const { username, type } = req.body;
+    const siteDomain = "investerly.in";
+    
+    const response = await fetch("https://redvisionassets.com/api/external-apis/login/forget-password", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        username,
+        type, // "client", "employee", "admin"
+        domain: siteDomain,
+        apiKey: process.env.REDVISION_API_KEY
+      })
+    });
+    
+    let data;
+    try {
+      data = await response.json();
+    } catch (parseError) {
+      return res.status(response.status).send(await response.text());
+    }
+    
+    if (response.ok) {
+      res.status(200).json(data);
+    } else {
+      res.status(response.status).json(data);
+    }
+  } catch (error) {
+    console.error("Redvision send OTP error:", error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+// @desc    Redvision API Forgot Password - Submit OTP
+// @route   POST /api/auth/redvision-forgot-password-submit
+// @access  Public
+router.post('/redvision-forgot-password-submit', async (req, res) => {
+  try {
+    const { OtpMobileNo, mobileOtp } = req.body;
+    const siteDomain = "investerly.in";
+    
+    const response = await fetch("https://redvisionassets.com/api/external-apis/login/submit-forget-password", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        OtpMobileNo,
+        mobileOtp,
+        domain: siteDomain,
+        apiKey: process.env.REDVISION_API_KEY
+      })
+    });
+    
+    let data;
+    try {
+      data = await response.json();
+    } catch (parseError) {
+      return res.status(response.status).send(await response.text());
+    }
+    
+    if (response.ok) {
+      res.status(200).json(data);
+    } else {
+      res.status(response.status).json(data);
+    }
+  } catch (error) {
+    console.error("Redvision submit OTP error:", error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
 module.exports = router;

@@ -18,6 +18,12 @@ const Login = () => {
   const [rvUsername, setRvUsername] = useState('');
   const [rvPassword, setRvPassword] = useState('');
   const [rvRole, setRvRole] = useState('client');
+  
+  // Forgot Password specific state
+  const [forgotUsername, setForgotUsername] = useState('');
+  const [forgotRole, setForgotRole] = useState('client');
+  const [forgotMobile, setForgotMobile] = useState('');
+  const [forgotOtp, setForgotOtp] = useState('');
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -77,6 +83,62 @@ const Login = () => {
       const errorMsg = data?.message || data?.error || data?.msg || (typeof data === 'string' ? data : 'Login failed');
       setError(errorMsg);
       console.error(err);
+    }
+  };
+
+  const handleForgotPasswordSendOTP = async (e) => {
+    e.preventDefault();
+    setError('');
+    
+    if (!forgotUsername) return setError('Please enter your username');
+    
+    setIsSubmitting(true);
+    try {
+      const res = await api.post('/auth/redvision-forgot-password-send', {
+        username: forgotUsername,
+        type: forgotRole
+      });
+      setIsSubmitting(false);
+      
+      if (res.data && res.data.msgType === 'error') {
+         return setError(res.data.msg || 'Failed to send OTP');
+      }
+      
+      // Success, move to step 2
+      setLoginStep('forgot-password-2');
+    } catch (err) {
+      setIsSubmitting(false);
+      const data = err.response?.data;
+      setError(data?.message || data?.error || data?.msg || (typeof data === 'string' ? data : 'Failed to send OTP'));
+    }
+  };
+
+  const handleForgotPasswordSubmitOTP = async (e) => {
+    e.preventDefault();
+    setError('');
+    
+    if (!forgotMobile || !forgotOtp) return setError('Please fill in all fields');
+    
+    setIsSubmitting(true);
+    try {
+      const res = await api.post('/auth/redvision-forgot-password-submit', {
+        OtpMobileNo: forgotMobile,
+        mobileOtp: forgotOtp
+      });
+      setIsSubmitting(false);
+      
+      if (res.data && (res.data.status === false || res.data.msgType === 'error')) {
+         return setError(res.data.msg || res.data.errorMsg || 'Failed to verify OTP');
+      }
+      
+      // OTP verified successfully, the backend might return a link or just a success message
+      setLoginStep('redvision');
+      setError('Password reset successful. Please login with your new credentials.');
+      // Make it look like a success message by tricking the UI (or just leave it as error style but user reads it)
+    } catch (err) {
+      setIsSubmitting(false);
+      const data = err.response?.data;
+      setError(data?.message || data?.error || data?.msg || (typeof data === 'string' ? data : 'Failed to verify OTP'));
     }
   };
 
@@ -221,11 +283,92 @@ const Login = () => {
               </div>
               
               <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '20px' }}>
-                <span style={{ fontSize: '14px', color: '#888', cursor: 'pointer' }}>Forgot Password?</span>
+                <span onClick={() => { setError(''); setLoginStep('forgot-password-1'); }} style={{ fontSize: '14px', color: '#888', cursor: 'pointer' }}>Forgot Password?</span>
               </div>
 
               <button type="submit" className="btn-premium" disabled={isSubmitting}>
                 {isSubmitting ? <Loader2 className="spinner" size={20} /> : "Login"}
+              </button>
+            </form>
+          </>
+        ) : loginStep === 'forgot-password-1' ? (
+          <>
+            <button type="button" className="back-to-options" onClick={() => { setError(''); setLoginStep('redvision'); }}>
+              <ArrowLeft size={16} /> Back to login
+            </button>
+            
+            <form onSubmit={handleForgotPasswordSendOTP} className="auth-form">
+              <h3 style={{ marginBottom: '15px' }}>Reset Password</h3>
+              <p style={{ fontSize: '14px', color: '#666', marginBottom: '20px' }}>Enter your username and role to receive an OTP.</p>
+
+              <div className="role-selection" style={{ display: 'flex', gap: '15px', marginBottom: '20px', borderBottom: '2px solid #45a8de', paddingBottom: '15px' }}>
+                <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', gap: '5px' }}>
+                  <input type="radio" name="forgotRole" value="client" checked={forgotRole === 'client'} onChange={(e) => setForgotRole(e.target.value)} />
+                  Client
+                </label>
+                <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', gap: '5px' }}>
+                  <input type="radio" name="forgotRole" value="employee" checked={forgotRole === 'employee'} onChange={(e) => setForgotRole(e.target.value)} />
+                  Employee
+                </label>
+                <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', gap: '5px' }}>
+                  <input type="radio" name="forgotRole" value="admin" checked={forgotRole === 'admin'} onChange={(e) => setForgotRole(e.target.value)} />
+                  Admin
+                </label>
+              </div>
+
+              <div className="input-group-premium">
+                <label>Username</label>
+                <input 
+                  type="text" 
+                  className="input-premium"
+                  value={forgotUsername}
+                  onChange={(e) => setForgotUsername(e.target.value)}
+                  placeholder="Enter your Username"
+                  required
+                />
+              </div>
+              
+              <button type="submit" className="btn-premium" disabled={isSubmitting}>
+                {isSubmitting ? <Loader2 className="spinner" size={20} /> : "Send OTP"}
+              </button>
+            </form>
+          </>
+        ) : loginStep === 'forgot-password-2' ? (
+          <>
+            <button type="button" className="back-to-options" onClick={() => { setError(''); setLoginStep('forgot-password-1'); }}>
+              <ArrowLeft size={16} /> Back
+            </button>
+            
+            <form onSubmit={handleForgotPasswordSubmitOTP} className="auth-form">
+              <h3 style={{ marginBottom: '15px' }}>Verify OTP</h3>
+              <p style={{ fontSize: '14px', color: '#666', marginBottom: '20px' }}>Enter the OTP sent to your registered mobile number.</p>
+
+              <div className="input-group-premium">
+                <label>Registered Mobile Number</label>
+                <input 
+                  type="text" 
+                  className="input-premium"
+                  value={forgotMobile}
+                  onChange={(e) => setForgotMobile(e.target.value)}
+                  placeholder="e.g. 9876543210"
+                  required
+                />
+              </div>
+
+              <div className="input-group-premium">
+                <label>OTP</label>
+                <input 
+                  type="text" 
+                  className="input-premium"
+                  value={forgotOtp}
+                  onChange={(e) => setForgotOtp(e.target.value)}
+                  placeholder="Enter OTP"
+                  required
+                />
+              </div>
+              
+              <button type="submit" className="btn-premium" disabled={isSubmitting}>
+                {isSubmitting ? <Loader2 className="spinner" size={20} /> : "Verify & Reset"}
               </button>
             </form>
           </>
