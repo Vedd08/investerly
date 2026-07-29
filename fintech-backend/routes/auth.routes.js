@@ -131,7 +131,7 @@ router.post('/redvision-login', async (req, res) => {
         loginFor,
         domain: siteDomain,
         callbackUrl: `https://${siteDomain}`, 
-        siteUrl: "", // left empty as per documentation if no white label
+        siteUrl: "https://wealthelite.in/",
         apiKey: process.env.REDVISION_API_KEY
       })
     });
