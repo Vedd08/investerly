@@ -66,11 +66,12 @@
   }
 
   .mobile-navbar .logo1 {
-    height: 48px;
+    height: 56px;
   }
 
   .mobile-navbar .logo2 {
-    height: 120px;
+    height: 160px;
+    margin: -25px -10px -25px -8px;
   }
 
   /* ── Hamburger toggle ── */
@@ -183,10 +184,18 @@
   }
 
   .mobile-menu-logo {
-    height: 72px;        /* bigger since no text beside it */
     width: auto;
     object-fit: contain;
     flex-shrink: 0;
+  }
+
+  .mobile-menu-logo.logo1 {
+    height: 65px;
+  }
+
+  .mobile-menu-logo.logo2 {
+    height: 170px;
+    margin: -25px -10px -25px -8px;
   }
 
   .mobile-brand .brand-text {
@@ -705,9 +714,15 @@
 }
 
 .mobile-menu-logo {
-  height: 68px;    /* logo only in drawer — no text beside it */
   width: auto;
   object-fit: contain;
+}
+.mobile-menu-logo.logo1 {
+  height: 65px;
+}
+.mobile-menu-logo.logo2 {
+  height: 170px;
+  margin: -25px -10px -25px -8px;
 }
 
 /* ── Very small phones (≤ 360px) ── */
@@ -717,8 +732,12 @@
     padding: 0 0.75rem;
   }
 
-  .mobile-navbar .navbar-logo {
-    height: 60px;
+  .mobile-navbar .navbar-logo.logo1 {
+    height: 50px;
+  }
+  .mobile-navbar .navbar-logo.logo2 {
+    height: 140px;
+    margin: -20px -8px -20px -6px;
   }
 
   .mobile-menu {

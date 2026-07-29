@@ -117,8 +117,8 @@ const MobileNavbar = ({ scrolled }) => {
         <div className="mobile-menu-header">
           <div className="mobile-brand">
             <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
-              <img src={logo1} alt="Investerly" className="mobile-menu-logo" style={{ height: '58px' }} />
-              <img src={logo2} alt="Investerly" className="mobile-menu-logo" style={{ height: '120px' }} />
+              <img src={logo1} alt="Investerly" className="mobile-menu-logo logo1" />
+              <img src={logo2} alt="Investerly" className="mobile-menu-logo logo2" />
             </div>
             <div className="mobile-brand-text">
               <span className="brand-text">INVESTERLY</span>
