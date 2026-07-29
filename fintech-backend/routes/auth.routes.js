@@ -128,10 +128,10 @@ router.post('/redvision-login', async (req, res) => {
       body: JSON.stringify({
         username,
         password,
-        loginFor, // e.g., "client", "employee", "admin"
+        loginFor,
         domain: siteDomain,
         callbackUrl: `https://${siteDomain}`, 
-        siteUrl: `https://wealthelite.in/`,
+        siteUrl: "", // left empty as per documentation if no white label
         apiKey: process.env.REDVISION_API_KEY
       })
     });
@@ -170,7 +170,7 @@ router.post('/redvision-forgot-password-send', async (req, res) => {
       },
       body: JSON.stringify({
         username,
-        type, // "client", "employee", "admin"
+        type, 
         domain: siteDomain,
         apiKey: process.env.REDVISION_API_KEY
       })
