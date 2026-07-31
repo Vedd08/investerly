@@ -18,12 +18,12 @@ const Login = () => {
   // Redvision specific state
   const [rvUsername, setRvUsername] = useState('');
   const [rvPassword, setRvPassword] = useState('');
-  const [rvRole, setRvRole] = useState('client');
+  const [rvRole, setRvRole] = useState('CLIENT');
   const [showRvPassword, setShowRvPassword] = useState(false);
   
   // Forgot Password specific state
   const [forgotUsername, setForgotUsername] = useState('');
-  const [forgotRole, setForgotRole] = useState('client');
+  const [forgotRole, setForgotRole] = useState('CLIENT');
   const [forgotMobile, setForgotMobile] = useState('');
   const [forgotOtp, setForgotOtp] = useState('');
   const { login } = useContext(AuthContext);
@@ -265,27 +265,27 @@ const Login = () => {
             <form onSubmit={handleRedvisionSubmit} className="auth-form">
               <div className="role-selection" style={{ display: 'flex', flexWrap: 'wrap', gap: '15px', marginBottom: '20px', borderBottom: '2px solid #45a8de', paddingBottom: '15px' }}>
                 <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', gap: '5px' }}>
-                  <input type="radio" name="rvRole" value="client" checked={rvRole === 'client'} onChange={(e) => setRvRole(e.target.value)} />
+                  <input type="radio" name="rvRole" value="CLIENT" checked={rvRole === 'CLIENT'} onChange={(e) => setRvRole(e.target.value)} />
                   Client
                 </label>
                 <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', gap: '5px' }}>
-                  <input type="radio" name="rvRole" value="employee" checked={rvRole === 'employee'} onChange={(e) => setRvRole(e.target.value)} />
+                  <input type="radio" name="rvRole" value="EMPLOYEE" checked={rvRole === 'EMPLOYEE'} onChange={(e) => setRvRole(e.target.value)} />
                   Employee
                 </label>
                 <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', gap: '5px' }}>
-                  <input type="radio" name="rvRole" value="admin" checked={rvRole === 'admin'} onChange={(e) => setRvRole(e.target.value)} />
+                  <input type="radio" name="rvRole" value="ADMIN" checked={rvRole === 'ADMIN'} onChange={(e) => setRvRole(e.target.value)} />
                   Admin
                 </label>
                 <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', gap: '5px' }}>
-                  <input type="radio" name="rvRole" value="advisors" checked={rvRole === 'advisors'} onChange={(e) => setRvRole(e.target.value)} />
+                  <input type="radio" name="rvRole" value="ADVISORS" checked={rvRole === 'ADVISORS'} onChange={(e) => setRvRole(e.target.value)} />
                   Advisors
                 </label>
                 <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', gap: '5px' }}>
-                  <input type="radio" name="rvRole" value="branch" checked={rvRole === 'branch'} onChange={(e) => setRvRole(e.target.value)} />
+                  <input type="radio" name="rvRole" value="BRANCH" checked={rvRole === 'BRANCH'} onChange={(e) => setRvRole(e.target.value)} />
                   Branch
                 </label>
                 <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', gap: '5px' }}>
-                  <input type="radio" name="rvRole" value="rm" checked={rvRole === 'rm'} onChange={(e) => setRvRole(e.target.value)} />
+                  <input type="radio" name="rvRole" value="RM" checked={rvRole === 'RM'} onChange={(e) => setRvRole(e.target.value)} />
                   RM
                 </label>
               </div>
@@ -345,27 +345,27 @@ const Login = () => {
 
               <div className="role-selection" style={{ display: 'flex', flexWrap: 'wrap', gap: '15px', marginBottom: '20px', borderBottom: '2px solid #45a8de', paddingBottom: '15px' }}>
                 <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', gap: '5px' }}>
-                  <input type="radio" name="forgotRole" value="client" checked={forgotRole === 'client'} onChange={(e) => setForgotRole(e.target.value)} />
+                  <input type="radio" name="forgotRole" value="CLIENT" checked={forgotRole === 'CLIENT'} onChange={(e) => setForgotRole(e.target.value)} />
                   Client
                 </label>
                 <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', gap: '5px' }}>
-                  <input type="radio" name="forgotRole" value="employee" checked={forgotRole === 'employee'} onChange={(e) => setForgotRole(e.target.value)} />
+                  <input type="radio" name="forgotRole" value="EMPLOYEE" checked={forgotRole === 'EMPLOYEE'} onChange={(e) => setForgotRole(e.target.value)} />
                   Employee
                 </label>
                 <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', gap: '5px' }}>
-                  <input type="radio" name="forgotRole" value="admin" checked={forgotRole === 'admin'} onChange={(e) => setForgotRole(e.target.value)} />
+                  <input type="radio" name="forgotRole" value="ADMIN" checked={forgotRole === 'ADMIN'} onChange={(e) => setForgotRole(e.target.value)} />
                   Admin
                 </label>
                 <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', gap: '5px' }}>
-                  <input type="radio" name="forgotRole" value="advisors" checked={forgotRole === 'advisors'} onChange={(e) => setForgotRole(e.target.value)} />
+                  <input type="radio" name="forgotRole" value="ADVISORS" checked={forgotRole === 'ADVISORS'} onChange={(e) => setForgotRole(e.target.value)} />
                   Advisors
                 </label>
                 <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', gap: '5px' }}>
-                  <input type="radio" name="forgotRole" value="branch" checked={forgotRole === 'branch'} onChange={(e) => setForgotRole(e.target.value)} />
+                  <input type="radio" name="forgotRole" value="BRANCH" checked={forgotRole === 'BRANCH'} onChange={(e) => setForgotRole(e.target.value)} />
                   Branch
                 </label>
                 <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', gap: '5px' }}>
-                  <input type="radio" name="forgotRole" value="rm" checked={forgotRole === 'rm'} onChange={(e) => setForgotRole(e.target.value)} />
+                  <input type="radio" name="forgotRole" value="RM" checked={forgotRole === 'RM'} onChange={(e) => setForgotRole(e.target.value)} />
                   RM
                 </label>
               </div>

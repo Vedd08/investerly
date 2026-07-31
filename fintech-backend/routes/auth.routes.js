@@ -101,6 +101,11 @@ router.post('/redvision-login', async (req, res) => {
     const { username, password, loginFor } = req.body;
     const siteDomain = "investerly.in";
     
+    const apiKey = process.env.REDVISION_API_KEY;
+    if (!apiKey) {
+      throw new Error("REDVISION_API_KEY is not defined in environment variables");
+    }
+    
     const response = await fetch("https://redvisionassets.com/api/external-apis/login/ifa-login", {
       method: "POST",
       headers: {
@@ -113,7 +118,7 @@ router.post('/redvision-login', async (req, res) => {
         domain: siteDomain,
         callbackUrl: `https://${siteDomain}`, 
         siteUrl: "https://wealthelite.in/",
-        apiKey: process.env.REDVISION_API_KEY
+        apiKey
       })
     });
     
@@ -142,6 +147,11 @@ router.post('/redvision-forgot-password-send', async (req, res) => {
     const { username, type } = req.body;
     const siteDomain = "investerly.in";
     
+    const apiKey = process.env.REDVISION_API_KEY;
+    if (!apiKey) {
+      throw new Error("REDVISION_API_KEY is not defined in environment variables");
+    }
+
     const response = await fetch("https://redvisionassets.com/api/external-apis/login/forget-password", {
       method: "POST",
       headers: {
@@ -151,7 +161,7 @@ router.post('/redvision-forgot-password-send', async (req, res) => {
         username,
         type, 
         domain: siteDomain,
-        apiKey: process.env.REDVISION_API_KEY
+        apiKey
       })
     });
     
@@ -178,6 +188,11 @@ router.post('/redvision-forgot-password-submit', async (req, res) => {
     const { OtpMobileNo, mobileOtp } = req.body;
     const siteDomain = "investerly.in";
     
+    const apiKey = process.env.REDVISION_API_KEY;
+    if (!apiKey) {
+      throw new Error("REDVISION_API_KEY is not defined in environment variables");
+    }
+
     const response = await fetch("https://redvisionassets.com/api/external-apis/login/submit-forget-password", {
       method: "POST",
       headers: {
@@ -187,7 +202,7 @@ router.post('/redvision-forgot-password-submit', async (req, res) => {
         OtpMobileNo,
         mobileOtp,
         domain: siteDomain,
-        apiKey: process.env.REDVISION_API_KEY
+        apiKey
       })
     });
     
