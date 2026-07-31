@@ -11,6 +11,7 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [successMsg, setSuccessMsg] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [loginStep, setLoginStep] = useState('select'); // 'select', 'form', or 'redvision'
   const [showPassword, setShowPassword] = useState(false);
@@ -34,6 +35,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setSuccessMsg('');
     
     if (!email || !password) {
       return setError('Please fill in all fields');
@@ -53,6 +55,7 @@ const Login = () => {
   const handleRedvisionSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setSuccessMsg('');
     
     if (!rvUsername || !rvPassword) {
       return setError('Please fill in all fields');
@@ -100,6 +103,7 @@ const Login = () => {
   const handleForgotPasswordSendOTP = async (e) => {
     e.preventDefault();
     setError('');
+    setSuccessMsg('');
     
     if (!forgotUsername) return setError('Please enter your username');
     
@@ -143,6 +147,7 @@ const Login = () => {
   const handleForgotPasswordSubmitOTP = async (e) => {
     e.preventDefault();
     setError('');
+    setSuccessMsg('');
     
     if (!forgotOtp) return setError('Please enter the OTP');
     
@@ -167,10 +172,9 @@ const Login = () => {
          return setError(data.msg || data.errorMsg || 'Failed to verify OTP');
       }
       
-      // OTP verified successfully, the backend might return a link or just a success message
+      // OTP verified successfully
       setLoginStep('redvision');
-      setError('Password reset successful. Please login with your new credentials.');
-      // Make it look like a success message by tricking the UI (or just leave it as error style but user reads it)
+      setSuccessMsg(data.msg || 'Please check your registered mail to reset password.');
     } catch (err) {
       setIsSubmitting(false);
       setError(err.message || 'Failed to verify OTP');
@@ -197,6 +201,12 @@ const Login = () => {
         {error && (
           <div className="premium-alert error">
             <AlertCircle size={18} /> {error}
+          </div>
+        )}
+        
+        {successMsg && (
+          <div className="premium-alert success" style={{ backgroundColor: '#e6f7eb', color: '#107a38', border: '1px solid #c2ebd1' }}>
+            <AlertCircle size={18} /> {successMsg}
           </div>
         )}
 
