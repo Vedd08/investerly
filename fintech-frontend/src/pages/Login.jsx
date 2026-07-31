@@ -58,32 +58,39 @@ const Login = () => {
 
     setIsSubmitting(true);
     try {
-      const res = await api.post('/auth/redvision-login', {
-        username: rvUsername,
-        password: rvPassword,
-        loginFor: rvRole,
-        domain: window.location.hostname
+      const siteDomain = "investerly.in";
+      const response = await fetch('https://redvisionassets.com/api/external-apis/login/ifa-login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          username: rvUsername,
+          password: rvPassword,
+          loginFor: rvRole,
+          domain: siteDomain,
+          callbackUrl: `https://${siteDomain}`,
+          siteUrl: "https://wealthelite.in/",
+          apiKey: "57268b861824987625fcdf55ff23abb6"
+        })
       });
       
+      const data = await response.json();
       setIsSubmitting(false);
       
       // If the API explicitly returns a false status inside a 200 OK response
-      if (res.data && res.data.status === false) {
-         return setError(res.data.msg || res.data.errorMsg || 'Login failed');
+      if (data && data.status === false) {
+         return setError(data.msg || data.errorMsg || 'Login failed');
       }
 
       // If the API gives a redirect link, follow it. Otherwise log the success.
-      if (res.data && (res.data.redirectUrl || res.data.url || res.data.callbackUrl)) {
-         window.location.href = res.data.redirectUrl || res.data.url || res.data.callbackUrl;
+      if (data && (data.redirectUrl || data.url || data.callbackUrl)) {
+         window.location.href = data.redirectUrl || data.url || data.callbackUrl;
       } else {
          setError('Login successful, but redirect URL not found in response. Check console.');
-         console.log('Redvision Response:', res.data);
+         console.log('Redvision Response:', data);
       }
     } catch (err) {
       setIsSubmitting(false);
-      const data = err.response?.data;
-      const errorMsg = data?.message || data?.error || data?.msg || (typeof data === 'string' ? data : 'Login failed');
-      setError(errorMsg);
+      setError(err.message || 'Login failed');
       console.error(err);
     }
   };
@@ -96,14 +103,23 @@ const Login = () => {
     
     setIsSubmitting(true);
     try {
-      const res = await api.post('/auth/redvision-forgot-password-send', {
-        username: forgotUsername,
-        type: forgotRole
+      const siteDomain = "investerly.in";
+      const response = await fetch('https://redvisionassets.com/api/external-apis/login/forget-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          username: forgotUsername,
+          type: forgotRole,
+          domain: siteDomain,
+          apiKey: "57268b861824987625fcdf55ff23abb6"
+        })
       });
+      
+      const data = await response.json();
       setIsSubmitting(false);
       
-      if (res.data && res.data.msgType === 'error') {
-         let errorMsg = res.data.msg || 'Failed to send OTP';
+      if (data && data.msgType === 'error') {
+         let errorMsg = data.msg || 'Failed to send OTP';
          if (errorMsg === 'Invalid Desk') {
             errorMsg = 'Username not found or invalid role for this desk.';
          }
@@ -114,12 +130,8 @@ const Login = () => {
       setLoginStep('forgot-password-2');
     } catch (err) {
       setIsSubmitting(false);
-      const data = err.response?.data;
-      let errorMsg = data?.message || data?.error || data?.msg || (typeof data === 'string' ? data : 'Failed to send OTP');
-      if (errorMsg === 'Invalid Desk') {
-         errorMsg = 'Username not found or invalid role for this desk.';
-      }
-      setError(errorMsg);
+      setError(err.message || 'Failed to send OTP');
+      console.error(err);
     }
   };
 
@@ -131,14 +143,23 @@ const Login = () => {
     
     setIsSubmitting(true);
     try {
-      const res = await api.post('/auth/redvision-forgot-password-submit', {
-        OtpMobileNo: forgotMobile,
-        mobileOtp: forgotOtp
+      const siteDomain = "investerly.in";
+      const response = await fetch('https://redvisionassets.com/api/external-apis/login/submit-forget-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          OtpMobileNo: forgotMobile,
+          mobileOtp: forgotOtp,
+          domain: siteDomain,
+          apiKey: "57268b861824987625fcdf55ff23abb6"
+        })
       });
+      
+      const data = await response.json();
       setIsSubmitting(false);
       
-      if (res.data && (res.data.status === false || res.data.msgType === 'error')) {
-         return setError(res.data.msg || res.data.errorMsg || 'Failed to verify OTP');
+      if (data && (data.status === false || data.msgType === 'error')) {
+         return setError(data.msg || data.errorMsg || 'Failed to verify OTP');
       }
       
       // OTP verified successfully, the backend might return a link or just a success message
@@ -147,8 +168,8 @@ const Login = () => {
       // Make it look like a success message by tricking the UI (or just leave it as error style but user reads it)
     } catch (err) {
       setIsSubmitting(false);
-      const data = err.response?.data;
-      setError(data?.message || data?.error || data?.msg || (typeof data === 'string' ? data : 'Failed to verify OTP'));
+      setError(err.message || 'Failed to verify OTP');
+      console.error(err);
     }
   };
 
