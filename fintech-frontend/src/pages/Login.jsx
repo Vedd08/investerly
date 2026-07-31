@@ -24,7 +24,9 @@ const Login = () => {
   // Forgot Password specific state
   const [forgotUsername, setForgotUsername] = useState('');
   const [forgotRole, setForgotRole] = useState('CLIENT');
-  const [forgotMobile, setForgotMobile] = useState('');
+  const [encryptedMobile, setEncryptedMobile] = useState('');
+  const [maskedMobile, setMaskedMobile] = useState('');
+  const [maskedEmail, setMaskedEmail] = useState('');
   const [forgotOtp, setForgotOtp] = useState('');
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -127,6 +129,9 @@ const Login = () => {
       }
       
       // Success, move to step 2
+      setEncryptedMobile(data.encryptedMobileNo || '');
+      setMaskedMobile(data.mobileLastFourDigit || '');
+      setMaskedEmail(data.email || '');
       setLoginStep('forgot-password-2');
     } catch (err) {
       setIsSubmitting(false);
@@ -139,7 +144,7 @@ const Login = () => {
     e.preventDefault();
     setError('');
     
-    if (!forgotMobile || !forgotOtp) return setError('Please fill in all fields');
+    if (!forgotOtp) return setError('Please enter the OTP');
     
     setIsSubmitting(true);
     try {
@@ -148,7 +153,7 @@ const Login = () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          OtpMobileNo: forgotMobile,
+          OtpMobileNo: encryptedMobile,
           mobileOtp: forgotOtp,
           domain: siteDomain,
           apiKey: "57268b861824987625fcdf55ff23abb6"
@@ -416,19 +421,9 @@ const Login = () => {
             
             <form onSubmit={handleForgotPasswordSubmitOTP} className="auth-form">
               <h3 style={{ marginBottom: '15px' }}>Verify OTP</h3>
-              <p style={{ fontSize: '14px', color: '#666', marginBottom: '20px' }}>Enter the OTP sent to your registered mobile number.</p>
-
-              <div className="input-group-premium">
-                <label>Registered Mobile Number</label>
-                <input 
-                  type="text" 
-                  className="input-premium"
-                  value={forgotMobile}
-                  onChange={(e) => setForgotMobile(e.target.value)}
-                  placeholder="e.g. 9876543210"
-                  required
-                />
-              </div>
+              <p style={{ fontSize: '14px', color: '#666', marginBottom: '20px' }}>
+                Enter the OTP sent to your registered mobile ending in <strong>{maskedMobile}</strong> or email <strong>{maskedEmail}</strong>.
+              </p>
 
               <div className="input-group-premium">
                 <label>OTP</label>
