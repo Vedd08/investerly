@@ -1,6 +1,4 @@
-/* =====================================================
-   MOBILE NAVBAR — CLEAN & RESPONSIVE
-   ===================================================== */
+/* Mobile Navbar */
 
 /* ── Hide mobile on desktop ── */
 @media (min-width: 769px) {
@@ -580,9 +578,7 @@
   }
 }
 
-/* ═══════════════════════════════════════════════════
-   SUBSECTION STYLES (inside mobile-menu so always scoped)
-═══════════════════════════════════════════════════ */
+/* Subsection Styles */
 
 @media (max-width: 768px) {
 

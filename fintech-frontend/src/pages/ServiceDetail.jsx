@@ -7,12 +7,80 @@ import { TrendingUp, Shield, Target, Zap, Gem } from "lucide-react";
 import services from "../data/services";
 import "../styles/service-detail.css";
 
-// Import Lottie animation
-import contactAnim from "../assets/lotties/contact-click.json"; // You'll need to add this
+import contactAnim from "../assets/lotties/contact-click.json";
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
+
+const serviceTags = {
+  "mutual-funds": ["Long-term Investors", "Retirement Planners", "Wealth Builders", "Tax Savers"],
+  "sip": ["Salaried Professionals", "Young Investors", "Goal Planners", "Disciplined Savers"],
+  "aif": ["HNIs", "Family Offices", "Institutional Investors", "Sophisticated Investors"],
+  "life-insurance": ["Breadwinners", "Parents", "Business Owners", "Loan Holders"],
+  "health-insurance": ["Families", "Senior Citizens", "Self-Employed", "Corporate"],
+  "vehicle-insurance": ["Car Owners", "Two-wheeler Owners", "Fleet Owners", "Commercial Vehicles"],
+  "fire-insurance": ["Property Owners", "Business Owners", "Warehouses", "Factories"],
+  "accident-insurance": ["Primary Earners", "High-Risk Jobs", "Frequent Travelers", "Self-Employed"]
+};
+
+const featureDescriptions = {
+  "mutual-funds": [
+    "Access to top-performing funds managed by experts",
+    "Spread risk across multiple securities and sectors",
+    "Easy entry and exit with high liquidity",
+    "Save taxes while building long-term wealth"
+  ],
+  "sip": [
+    "Invest fixed amounts at regular intervals",
+    "Buy more units when prices are low",
+    "Long-term wealth creation through compounding",
+    "Increase SIP amount as your income grows"
+  ]
+};
+
+const coverageDetails = {
+  "life-insurance": [
+    { name: "Death Benefit", desc: "Guaranteed payout to nominee" },
+    { name: "Maturity Benefit", desc: "Amount paid on policy maturity" },
+    { name: "Critical illness", desc: "Coverage for major illnesses" },
+    { name: "Accidental Death", desc: "Additional cover for accidents" },
+    { name: "Term Rider", desc: "Optional add-on coverage" },
+    { name: "Tax Benefits", desc: "Under Section 80C & 10(10D)" }
+  ],
+  "health-insurance": [
+    { name: "Hospitalization", desc: "In-patient treatment coverage" },
+    { name: "Daycare Procedures", desc: "No 24-hour hospitalization required" },
+    { name: "Pre & Post Care", desc: "Coverage before and after" },
+    { name: "Ambulance Cover", desc: "Emergency transport" },
+    { name: "No Claim Bonus", desc: "Increase cover yearly" },
+    { name: "Tax Benefits", desc: "Under Section 80D" }
+  ],
+  "vehicle-insurance": [
+    { name: "Own Damage", desc: "Damage to your vehicle" },
+    { name: "Third Party", desc: "Damage to others" },
+    { name: "Personal Accident", desc: "Coverage for injuries" },
+    { name: "Zero Depreciation", desc: "Full claim without depreciation" },
+    { name: "Roadside Assistance", desc: "24/7 emergency support" },
+    { name: "NCB Protection", desc: "Preserve no claim bonus" }
+  ],
+  "fire-insurance": [
+    { name: "Building Cover", desc: "Protection for physical structure" },
+    { name: "Content Cover", desc: "Protection for assets inside" },
+    { name: "Allied Perils", desc: "Storms, floods, riots cover" },
+    { name: "Loss of Profit", desc: "Compensation for business interruption" },
+    { name: "Stock Insurance", desc: "Coverage for raw materials and inventory" },
+    { name: "Earthquake Add-on", desc: "Optional cover against seismic activity" }
+  ],
+  "accident-insurance": [
+    { name: "Accidental Death", desc: "100% sum insured paid to nominee" },
+    { name: "Permanent Total Disability", desc: "Payout for life-altering injuries" },
+    { name: "Permanent Partial Disability", desc: "Percentage payout based on severity" },
+    { name: "Temporary Total Disability", desc: "Weekly income replacement" },
+    { name: "Education Grant", desc: "Financial support for dependent children" },
+    { name: "Medical Expenses", desc: "Reimbursement for accident treatments" }
+  ]
+};
 
 const ServiceDetail = () => {
   const { slug } = useParams();
@@ -22,7 +90,6 @@ const ServiceDetail = () => {
   const contactLottieRef = useRef(null);
 
   useEffect(() => {
-    // FIRST: Ensure all elements are fully visible by default
     gsap.set(".service-hero-content, .feature-card, .benefit-item, .faq-item, .cta-card, .overview-grid, .visual-card", {
       opacity: 1,
       y: 0,
@@ -31,8 +98,6 @@ const ServiceDetail = () => {
     });
 
     const ctx = gsap.context(() => {
-
-      // Hero animation
       gsap.from(".service-hero-content", {
         scrollTrigger: {
           trigger: sectionRef.current,
@@ -181,7 +246,6 @@ const ServiceDetail = () => {
   return (
     <main className="service-detail" ref={sectionRef}>
 
-      {/* Hero Section - Without Stats */}
       <section className="service-hero">
         <div className="container">
           <div className="service-hero-content">
@@ -195,7 +259,6 @@ const ServiceDetail = () => {
             </h1>
             <p className="hero-description">{service.intro}</p>
 
-            {/* Simple Contact Button with Lottie */}
             <div className="service-contact-wrapper">
               <Link
                 to="/contact"
@@ -235,21 +298,9 @@ const ServiceDetail = () => {
               <div className="ideal-for">
                 <h3>Perfect for:</h3>
                 <div className="ideal-tags">
-                  {(() => {
-                    const tags = {
-                      "mutual-funds": ["Long-term Investors", "Retirement Planners", "Wealth Builders", "Tax Savers"],
-                      "sip": ["Salaried Professionals", "Young Investors", "Goal Planners", "Disciplined Savers"],
-                      "aif": ["HNIs", "Family Offices", "Institutional Investors", "Sophisticated Investors"],
-                      "life-insurance": ["Breadwinners", "Parents", "Business Owners", "Loan Holders"],
-                      "health-insurance": ["Families", "Senior Citizens", "Self-Employed", "Corporate"],
-                      "vehicle-insurance": ["Car Owners", "Two-wheeler Owners", "Fleet Owners", "Commercial Vehicles"],
-                      "fire-insurance": ["Property Owners", "Business Owners", "Warehouses", "Factories"],
-                      "accident-insurance": ["Primary Earners", "High-Risk Jobs", "Frequent Travelers", "Self-Employed"]
-                    };
-                    return (tags[slug] || ["Individual Investors", "Business Owners"]).map((tag, i) => (
-                      <span key={i} className="tag">{tag}</span>
-                    ));
-                  })()}
+                  {(serviceTags[slug] || ["Individual Investors", "Business Owners"]).map((tag, i) => (
+                    <span key={i} className="tag">{tag}</span>
+                  ))}
                 </div>
               </div>
             </div>
@@ -296,23 +347,7 @@ const ServiceDetail = () => {
                   </div>
                   <h3 className="feature-title">{feature}</h3>
                   <p className="feature-description">
-                    {(() => {
-                      const descriptions = {
-                        "mutual-funds": [
-                          "Access to top-performing funds managed by experts",
-                          "Spread risk across multiple securities and sectors",
-                          "Easy entry and exit with high liquidity",
-                          "Save taxes while building long-term wealth"
-                        ],
-                        "sip": [
-                          "Invest fixed amounts at regular intervals",
-                          "Buy more units when prices are low",
-                          "Long-term wealth creation through compounding",
-                          "Increase SIP amount as your income grows"
-                        ]
-                      };
-                      return (descriptions[slug]?.[index] || "Premium feature with expert guidance") + " →";
-                    })()}
+                    {(featureDescriptions[slug]?.[index] || "Premium feature with expert guidance")} →
                   </p>
                   <div className="feature-shine"></div>
                 </div>
@@ -382,7 +417,6 @@ const ServiceDetail = () => {
         </section>
       )}
 
-      {/* Comparison Table for Investment Products */}
       {isInvestment && (
         <section className="comparison-section">
           <div className="container">
@@ -431,7 +465,6 @@ const ServiceDetail = () => {
         </section>
       )}
 
-      {/* Insurance Coverage for Insurance Products */}
       {isInsurance && (
         <section className="coverage-section">
           <div className="container">
@@ -444,59 +477,15 @@ const ServiceDetail = () => {
             </div>
 
             <div className="coverage-grid">
-              {(() => {
-                const coverages = {
-                  "life-insurance": [
-                    { name: "Death Benefit", desc: "Guaranteed payout to nominee" },
-                    { name: "Maturity Benefit", desc: "Amount paid on policy maturity" },
-                    { name: "Critical illness", desc: "Coverage for major illnesses" },
-                    { name: "Accidental Death", desc: "Additional cover for accidents" },
-                    { name: "Term Rider", desc: "Optional add-on coverage" },
-                    { name: "Tax Benefits", desc: "Under Section 80C & 10(10D)" }
-                  ],
-                  "health-insurance": [
-                    { name: "Hospitalization", desc: "In-patient treatment coverage" },
-                    { name: "Daycare Procedures", desc: "No 24-hour hospitalization required" },
-                    { name: "Pre & Post Care", desc: "Coverage before and after" },
-                    { name: "Ambulance Cover", desc: "Emergency transport" },
-                    { name: "No Claim Bonus", desc: "Increase cover yearly" },
-                    { name: "Tax Benefits", desc: "Under Section 80D" }
-                  ],
-                  "vehicle-insurance": [
-                    { name: "Own Damage", desc: "Damage to your vehicle" },
-                    { name: "Third Party", desc: "Damage to others" },
-                    { name: "Personal Accident", desc: "Coverage for injuries" },
-                    { name: "Zero Depreciation", desc: "Full claim without depreciation" },
-                    { name: "Roadside Assistance", desc: "24/7 emergency support" },
-                    { name: "NCB Protection", desc: "Preserve no claim bonus" }
-                  ],
-                  "fire-insurance": [
-                    { name: "Building Cover", desc: "Protection for physical structure" },
-                    { name: "Content Cover", desc: "Protection for assets inside" },
-                    { name: "Allied Perils", desc: "Storms, floods, riots cover" },
-                    { name: "Loss of Profit", desc: "Compensation for business interruption" },
-                    { name: "Stock Insurance", desc: "Coverage for raw materials and inventory" },
-                    { name: "Earthquake Add-on", desc: "Optional cover against seismic activity" }
-                  ],
-                  "accident-insurance": [
-                    { name: "Accidental Death", desc: "100% sum insured paid to nominee" },
-                    { name: "Permanent Total Disability", desc: "Payout for life-altering injuries" },
-                    { name: "Permanent Partial Disability", desc: "Percentage payout based on severity" },
-                    { name: "Temporary Total Disability", desc: "Weekly income replacement" },
-                    { name: "Education Grant", desc: "Financial support for dependent children" },
-                    { name: "Medical Expenses", desc: "Reimbursement for accident treatments" }
-                  ]
-                };
-                return (coverages[slug] || []).map((item, index) => (
-                  <div key={index} className="coverage-card">
-                    <div className="coverage-header">
-                      <span className="coverage-check">✓</span>
-                      <h4>{item.name}</h4>
-                    </div>
-                    <p>{item.desc}</p>
+              {(coverageDetails[slug] || []).map((item, index) => (
+                <div key={index} className="coverage-card">
+                  <div className="coverage-header">
+                    <span className="coverage-check">✓</span>
+                    <h4>{item.name}</h4>
                   </div>
-                ));
-              })()}
+                  <p>{item.desc}</p>
+                </div>
+              ))}
             </div>
           </div>
         </section>

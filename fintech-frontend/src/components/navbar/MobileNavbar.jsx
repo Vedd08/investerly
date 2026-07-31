@@ -138,7 +138,6 @@ const MobileNavbar = ({ scrolled }) => {
             <span className="link-text">Home</span>
           </NavLink>
 
-          {/* Services Section */}
           <div className="mobile-dropdown">
             <div
               className={`mobile-dropdown-btn ${servicesOpen ? 'open' : ''}`}
@@ -183,7 +182,6 @@ const MobileNavbar = ({ scrolled }) => {
                 PMS
               </NavLink>
 
-              {/* General Insurance Nested */}
               <div className="mobile-nested-dropdown">
                 <div
                   className={`mobile-nested-btn ${generalOpen ? 'open' : ''}`}
@@ -237,7 +235,6 @@ const MobileNavbar = ({ scrolled }) => {
             </div>
           </div>
 
-          {/* Tools Section */}
           <div className="mobile-dropdown">
             <div
               className={`mobile-dropdown-btn ${toolsOpen ? 'open' : ''}`}
@@ -250,7 +247,6 @@ const MobileNavbar = ({ scrolled }) => {
 
             <div className={`mobile-dropdown-content ${toolsOpen ? 'open' : ''}`}>
 
-              {/* View All Tools - Featured Link */}
               <NavLink to="/tools" className="mobile-dropdown-item featured" onClick={handleLinkClick}>
                 <span className="item-icon"><ClipboardList size={18} /></span>
                 <span className="item-text">All Tools Overview</span>
@@ -259,7 +255,6 @@ const MobileNavbar = ({ scrolled }) => {
 
               <div className="mobile-divider"></div>
 
-              {/* Investment Tools Subsection */}
               <div className="mobile-subsection">
                 <div
                   className={`mobile-subsection-btn ${investmentToolsOpen ? 'open' : ''}`}
@@ -283,7 +278,6 @@ const MobileNavbar = ({ scrolled }) => {
                 </div>
               </div>
 
-              {/* Loan Tools Subsection */}
               <div className="mobile-subsection">
                 <div
                   className={`mobile-subsection-btn ${loanToolsOpen ? 'open' : ''}`}
@@ -307,7 +301,6 @@ const MobileNavbar = ({ scrolled }) => {
                 </div>
               </div>
 
-              {/* Individual Tools */}
               <NavLink to="/tools/marriage-calculator" className="mobile-dropdown-item" onClick={handleLinkClick}>
                 <span className="item-icon"><Heart size={18} /></span>
                 Marriage Calculator
@@ -344,7 +337,6 @@ const MobileNavbar = ({ scrolled }) => {
             <span className="link-text">Contact</span>
           </NavLink>
 
-          {/* Login / Account Section */}
           {isLoggedIn ? (
             <>
               <div className="mobile-user-info">

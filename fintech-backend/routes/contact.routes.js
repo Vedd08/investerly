@@ -23,7 +23,7 @@ router.post(
     const { name, email, message } = req.body;
 
     try {
-      // ── Email to Investerly team ────────────────────────────────────────
+      // Send email to Investerly team
       await sendEmail({
         to: process.env.RECIPIENT_EMAIL,
         subject: `New Contact Enquiry from ${name}`,
@@ -68,7 +68,7 @@ router.post(
         `,
       });
 
-      // ── Auto-reply to sender ────────────────────────────────────────────
+      // Send auto-reply to sender
       await sendEmail({
         to: email,
         subject: "We've received your message — Investerly",

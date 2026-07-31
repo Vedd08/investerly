@@ -15,9 +15,6 @@ const generateToken = (id) => {
   });
 };
 
-// @desc    Register a new user
-// @route   POST /api/auth/register
-// @access  Public
 router.post('/register', [
   body('name').trim().notEmpty().withMessage('Name is required'),
   body('email').isEmail().withMessage('Valid email is required'),
@@ -32,14 +29,11 @@ router.post('/register', [
   try {
     const { name, email, contactNumber, password } = req.body;
 
-    // Check if user exists
     const userExists = await User.findOne({ email });
-
     if (userExists) {
       return res.status(400).json({ success: false, message: 'User already exists' });
     }
 
-    // Create user
     const user = await User.create({
       name,
       email,
@@ -63,9 +57,6 @@ router.post('/register', [
   }
 });
 
-// @desc    Authenticate a user
-// @route   POST /api/auth/login
-// @access  Public
 router.post('/login', [
   body('email').isEmail().withMessage('Valid email is required'),
   body('password').exists().withMessage('Password is required')
@@ -78,7 +69,6 @@ router.post('/login', [
   try {
     const { email, password } = req.body;
 
-    // Check for user email
     const user = await User.findOne({ email }).select('+password');
 
     if (user && (await user.matchPassword(password))) {
@@ -97,9 +87,6 @@ router.post('/login', [
   }
 });
 
-// @desc    Get user data
-// @route   GET /api/auth/me
-// @access  Private
 router.get('/me', protect, async (req, res) => {
   res.json({
     success: true,
@@ -109,17 +96,11 @@ router.get('/me', protect, async (req, res) => {
   });
 });
 
-// @desc    Redvision API Login Proxy
-// @route   POST /api/auth/redvision-login
-// @access  Public
 router.post('/redvision-login', async (req, res) => {
   try {
     const { username, password, loginFor } = req.body;
-    
-    // Redvision strictly requires the authorized domain for the API Key
     const siteDomain = "investerly.in";
     
-    // Ensure Node fetch is available (Node 18+)
     const response = await fetch("https://redvisionassets.com/api/external-apis/login/ifa-login", {
       method: "POST",
       headers: {
@@ -139,8 +120,9 @@ router.post('/redvision-login', async (req, res) => {
     let data;
     try {
       data = await response.json();
+      console.log(data);
     } catch (parseError) {
-      // In case the API returns non-JSON like HTML or empty body
+      
       return res.status(response.status).send(await response.text());
     }
     
@@ -155,9 +137,6 @@ router.post('/redvision-login', async (req, res) => {
   }
 });
 
-// @desc    Redvision API Forgot Password - Send OTP
-// @route   POST /api/auth/redvision-forgot-password-send
-// @access  Public
 router.post('/redvision-forgot-password-send', async (req, res) => {
   try {
     const { username, type } = req.body;
@@ -194,9 +173,6 @@ router.post('/redvision-forgot-password-send', async (req, res) => {
   }
 });
 
-// @desc    Redvision API Forgot Password - Submit OTP
-// @route   POST /api/auth/redvision-forgot-password-submit
-// @access  Public
 router.post('/redvision-forgot-password-submit', async (req, res) => {
   try {
     const { OtpMobileNo, mobileOtp } = req.body;
