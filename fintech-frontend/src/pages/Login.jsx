@@ -313,7 +313,7 @@ const Login = () => {
                   Admin
                 </label>
                 <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', gap: '5px' }}>
-                  <input type="radio" name="rvRole" value="ADVISORS" checked={rvRole === 'ADVISORS'} onChange={(e) => setRvRole(e.target.value)} />
+                  <input type="radio" name="rvRole" value="ADVISOR" checked={rvRole === 'ADVISOR'} onChange={(e) => setRvRole(e.target.value)} />
                   Advisors
                 </label>
                 <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', gap: '5px' }}>
@@ -393,7 +393,7 @@ const Login = () => {
                   Admin
                 </label>
                 <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', gap: '5px' }}>
-                  <input type="radio" name="forgotRole" value="ADVISORS" checked={forgotRole === 'ADVISORS'} onChange={(e) => setForgotRole(e.target.value)} />
+                  <input type="radio" name="forgotRole" value="ADVISOR" checked={forgotRole === 'ADVISOR'} onChange={(e) => setForgotRole(e.target.value)} />
                   Advisors
                 </label>
                 <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', gap: '5px' }}>
