@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { AlertCircle, Loader2, UserCircle, Briefcase, ArrowLeft, Eye, EyeOff } from 'lucide-react';
-import api from '../utils/api';
+
 import logo1 from '../assets/investerly_logo1-removebg-preview (1).svg';
 import logo2 from '../assets/investerly_logo3-removebg-preview.svg';
 import '../styles/login.css';

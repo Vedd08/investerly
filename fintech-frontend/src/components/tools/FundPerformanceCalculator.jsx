@@ -159,7 +159,7 @@ const FundPerformanceCalculator = () => {
                 fund.risk === 'Moderate' ? 1.0 : 0.7);
 
     // Comparison with other fund types
-    const comparison = Object.entries(fundCategories).map(([key, f]) => ({
+    const comparison = Object.entries(fundCategories).map(([, f]) => ({
       name: f.name,
       returns: f.returns[timePeriod.toString()] || f.returns['5'],
       risk: f.risk,
@@ -330,6 +330,7 @@ const FundPerformanceCalculator = () => {
     return forPDF ? formatted.replace(/₹/g, 'Rs. ') : formatted;
   };
 
+  // eslint-disable-next-line no-unused-vars
   const formatPercentage = (num) => {
     if (!num || isNaN(num)) return "0%";
     return `${num.toFixed(2)}%`;

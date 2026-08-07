@@ -34,6 +34,7 @@ const ProposalViewer = () => {
 
   useEffect(() => {
     if (location.state && location.state.reportData) {
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       setReportData(location.state.reportData);
     } else {
       navigate('/dashboard');

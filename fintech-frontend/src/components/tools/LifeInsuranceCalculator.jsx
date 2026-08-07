@@ -21,7 +21,7 @@ const LifeInsuranceCalculator = () => {
   const [dependents, setDependents] = useState(2);
   const [loanOutstanding, setLoanOutstanding] = useState(5000000);
   const [childrenEducation, setChildrenEducation] = useState(2000000);
-  const [inflationRate, setInflationRate] = useState(6);
+  const [inflationRate] = useState(6);
 
   const sectionRef = useRef(null);
   const resultRef = useRef(null);
@@ -70,7 +70,7 @@ const LifeInsuranceCalculator = () => {
       coverageGap: Math.max(0, recommendedCoverage - existingCoverage),
       protectionRatio: (existingCoverage / (recommendedCoverage + existingCoverage)) * 100
     };
-  }, [age, annualIncome, monthlyExpenses, existingCoverage, dependents,
+  }, [age, annualIncome, monthlyExpenses, existingCoverage,
     loanOutstanding, childrenEducation, inflationRate]);
 
   useEffect(() => {

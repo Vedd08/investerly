@@ -56,7 +56,7 @@ const Partner = () => {
         message: ""
       });
 
-    } catch (err) {
+    } catch {
       setStatus({
         loading: false,
         success: null,

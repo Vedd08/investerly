@@ -17,7 +17,7 @@ const HomeLoanCalculator = () => {
   const [downPayment, setDownPayment] = useState(1000000);
   const [loanTenure, setLoanTenure] = useState(20);
   const [interestRate, setInterestRate] = useState(8.5);
-  const [processingFee, setProcessingFee] = useState(0.5);
+  const [processingFee] = useState(0.5);
   const [propertyType, setPropertyType] = useState('residential');
 
   const sectionRef = useRef(null);

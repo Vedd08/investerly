@@ -48,7 +48,7 @@ const Dashboard = () => {
       } else {
         setError('Failed to fetch reports.');
       }
-    } catch (err) {
+    } catch {
       setError('An error occurred while fetching your dashboard data.');
     } finally {
       setLoading(false);

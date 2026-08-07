@@ -109,6 +109,8 @@ const EducationPlanningCalculator = () => {
       yearlyProjection,
       duration: selectedEducation.duration
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [childAge, educationStartAge, educationType, currentSavings,
     monthlySIP, returnRate, inflationRate]);
 

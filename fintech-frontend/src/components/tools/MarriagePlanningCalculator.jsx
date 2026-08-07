@@ -26,9 +26,9 @@ const MarriagePlanningCalculator = () => {
   const [cateringCost, setCateringCost] = useState(1000000);
   const [decorationCost, setDecorationCost] = useState(500000);
   const [jewelryCost, setJewelryCost] = useState(2000000);
-  const [clothingCost, setClothingCost] = useState(500000);
-  const [photographyCost, setPhotographyCost] = useState(300000);
-  const [otherCosts, setOtherCosts] = useState(1000000);
+  const [clothingCost] = useState(500000);
+  const [photographyCost] = useState(300000);
+  const [otherCosts] = useState(1000000);
 
   const sectionRef = useRef(null);
   const resultRef = useRef(null);

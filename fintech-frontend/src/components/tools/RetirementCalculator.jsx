@@ -4,10 +4,10 @@ import { Umbrella, Target, Sparkles, Wallet, TrendingUp, Hourglass, Scale, Shiel
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import jsPDF from "jspdf";
-import autoTable from "jspdf-autotable";
+
 import "../../styles/calculator.css";
 import "../../styles/retirement.css";
-import { addReportHeader, addReportFooter, addBarChart, addGrowthChart } from "../../utils/pdfHelper";
+import { addReportHeader, addReportFooter, addGrowthChart } from "../../utils/pdfHelper";
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);

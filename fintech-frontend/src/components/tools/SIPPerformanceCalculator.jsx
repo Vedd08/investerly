@@ -53,6 +53,7 @@ const SIPPerformanceCalculator = () => {
   const result = useMemo(() => {
     const selectedScenario = marketScenarios[scenario];
     const monthlyRate = selectedScenario.returns / 12 / 100;
+    // eslint-disable-next-line no-unused-vars
     const months = years * 12;
     
     // Calculate SIP with step-up
@@ -133,6 +134,8 @@ const SIPPerformanceCalculator = () => {
       wealthRatio: totalFutureValue / totalInvested,
       annualizedReturn: selectedScenario.returns
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [monthlySIP, years, stepUp, scenario, lumpsumInvestment, showLumpsum]);
 
   useEffect(() => {

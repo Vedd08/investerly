@@ -137,7 +137,7 @@ const ProposalGenerator = () => {
       } else {
         setError('Downloaded PDF, but failed to save history to dashboard.');
       }
-    } catch (err) {
+    } catch {
       setError('Failed to generate PDF proposal.');
     } finally {
       setIsGenerating(false);

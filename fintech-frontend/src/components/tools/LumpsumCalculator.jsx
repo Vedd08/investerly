@@ -7,7 +7,7 @@ import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import "../../styles/calculator.css";
 import "../../styles/lumpsum.css";
-import { addReportHeader, addReportFooter, addBarChart, addGrowthChart } from "../../utils/pdfHelper";
+import { addReportHeader, addReportFooter, addGrowthChart } from "../../utils/pdfHelper";
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);

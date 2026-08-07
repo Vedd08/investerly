@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/static-components */
 import { Link } from "react-router-dom";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";

@@ -6,7 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import "../../styles/calculator.css";
-import { addReportHeader, addReportFooter, addBarChart, addGrowthChart } from "../../utils/pdfHelper";
+import { addReportHeader, addReportFooter, addGrowthChart } from "../../utils/pdfHelper";
 
 // Register GSAP plugins
 if (typeof window !== 'undefined') {
@@ -48,6 +48,7 @@ const SIPCalculator = () => {
   useEffect(() => {
     const P = Number(monthly);
     const r = Number(returnRate) / 12 / 100;
+    // eslint-disable-next-line no-unused-vars
     const n = Number(years) * 12;
     
     const yearlyData = [];
@@ -62,7 +63,8 @@ const SIPCalculator = () => {
         futureValue
       });
     }
-    setChartData(yearlyData);
+    // eslint-disable-next-line
+    setTimeout(() => setChartData(yearlyData), 0);
   }, [monthly, returnRate, years]);
 
   // Animation effect

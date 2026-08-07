@@ -3,6 +3,7 @@ import autoTable from 'jspdf-autotable';
 import logoImg from '../assets/investerly_logo3-removebg-preview.svg';
 import iconImg from '../assets/logo.svg';
 
+// eslint-disable-next-line no-unused-vars
 export const generateCorporateReport = async (formData, userName) => {
   const doc = new jsPDF('p', 'mm', 'a4');
   

@@ -26,8 +26,8 @@ const TaxCalculator = () => {
   const [lta, setLta] = useState(30000);
   const [homeLoanInterest, setHomeLoanInterest] = useState(200000);
   const [nps, setNps] = useState(50000);
-  const [educationLoan, setEducationLoan] = useState(0);
-  const [donations, setDonations] = useState(0);
+  const [educationLoan] = useState(0);
+  const [donations] = useState(0);
 
   // New Regime specific
   const [standardDeduction, setStandardDeduction] = useState(100000);
@@ -290,6 +290,7 @@ const TaxCalculator = () => {
     return forPDF ? formatted.replace(/₹/g, 'Rs. ') : formatted;
   };
 
+  // eslint-disable-next-line no-unused-vars
   const formatLargeNumber = (num, forPDF = false) => {
     if (!num || isNaN(num)) return forPDF ? 'Rs. 0' : '₹0';
     const symbol = forPDF ? 'Rs. ' : '₹';

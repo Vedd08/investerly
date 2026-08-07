@@ -17,9 +17,9 @@ const CarLoanCalculator = () => {
   const [downPayment, setDownPayment] = useState(200000);
   const [loanTenure, setLoanTenure] = useState(5);
   const [interestRate, setInterestRate] = useState(9.5);
-  const [processingFee, setProcessingFee] = useState(1);
+  const [processingFee] = useState();
   const [annualIncome, setAnnualIncome] = useState(600000);
-  const [existingEMI, setExistingEMI] = useState(0);
+  const [existingEMI] = useState(0);
   const [insuranceCost, setInsuranceCost] = useState(30000);
   const [rtoCharges, setRtoCharges] = useState(80000);
   const [creditScore, setCreditScore] = useState(750);
@@ -192,6 +192,7 @@ const CarLoanCalculator = () => {
     return forPDF ? formatted.replace(/₹/g, 'Rs. ') : formatted;
   };
 
+  // eslint-disable-next-line no-unused-vars
   const formatLargeNumber = (num, forPDF = false) => {
     if (!num || isNaN(num)) return forPDF ? 'Rs. 0' : '₹0';
     const symbol = forPDF ? 'Rs. ' : '₹';
